@@ -61,6 +61,16 @@ flutter:
   assets:
     - assets/discogs/
 
+  fonts:
+    - family: Bodoni Moda
+      fonts:
+        - asset: assets/fonts/BodoniModa.ttf
+        - asset: assets/fonts/BodoniModa-Italic.ttf
+          style: italic
+    - family: Plus Jakarta Sans
+      fonts:
+        - asset: assets/fonts/PlusJakartaSans.ttf
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

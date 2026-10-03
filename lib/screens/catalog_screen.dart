@@ -4,6 +4,7 @@ import '../models/album.dart';
 import '../state/selection.dart';
 import '../widgets/favorites_badge.dart';
 import '../widgets/generated_cover.dart';
+import '../widgets/vault_title.dart';
 
 class CatalogScreen extends StatelessWidget {
   const CatalogScreen({
@@ -22,7 +23,9 @@ class CatalogScreen extends StatelessWidget {
       builder: (context, _) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('CD Catalog'),
+            toolbarHeight: 72,
+            titleSpacing: 20,
+            title: const VaultTitle(),
             actions: [FavoritesBadge(count: selection.favoritesCount)],
           ),
           body: ListView.builder(

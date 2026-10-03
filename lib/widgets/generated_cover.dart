@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import '../data/album_palettes.dart';
 import '../models/album.dart';
 
-/// Portada abstracta dibujada por código. La composición sale del id del
-/// release, así que cada disco tiene siempre la misma.
+/// Portada abstracta dibujada por código en el estilo de las referencias de
+/// Stitch: retícula fina, anillos concéntricos, dos barras diagonales y un medio
+/// círculo. La composición sale del id del release, así que es estable.
 class GeneratedCover extends StatelessWidget {
   const GeneratedCover({super.key, required this.album});
 
@@ -31,54 +32,76 @@ class _CoverPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rect = Offset.zero & size;
+    final w = size.width;
+    final h = size.height;
+    final s = size.shortestSide;
     final random = math.Random(seed);
 
-    canvas.drawRect(
-      rect,
-      Paint()
-        ..shader = LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            palette.background,
-            Color.lerp(palette.background, palette.primary, 0.55)!,
-          ],
-        ).createShader(rect),
-    );
+    canvas.drawRect(Offset.zero & size, Paint()..color = palette.background);
+
+    final grid = Paint()
+      ..color = palette.primary.withValues(alpha: 0.10)
+      ..strokeWidth = 1;
+    for (var i = 1; i < 6; i++) {
+      canvas.drawLine(Offset(w * i / 6, 0), Offset(w * i / 6, h), grid);
+    }
 
     final center = Offset(
-      size.width * (0.3 + random.nextDouble() * 0.4),
-      size.height * (0.25 + random.nextDouble() * 0.2),
+      w * (0.35 + random.nextDouble() * 0.3),
+      h * (0.3 + random.nextDouble() * 0.15),
     );
-    final radius = size.shortestSide * 0.32;
-    canvas.drawCircle(center, radius, Paint()..color = palette.accent);
-
-    final ring = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = size.shortestSide * 0.012
-      ..color = palette.background.withValues(alpha: 0.35);
-    for (var i = 1; i <= 3; i++) {
-      canvas.drawCircle(center, radius * i / 4, ring);
-    }
-
-    final band = Paint()..color = palette.primary.withValues(alpha: 0.85);
-    final bandHeight = size.height * 0.07;
-    canvas
-      ..save()
-      ..translate(size.width / 2, size.height * 0.72)
-      ..rotate(-0.35 + random.nextDouble() * 0.7);
-    for (var i = 0; i < 3; i++) {
-      canvas.drawRect(
-        Rect.fromCenter(
-          center: Offset(0, i * bandHeight * 1.6),
-          width: size.longestSide * 1.6,
-          height: bandHeight,
-        ),
-        band,
+    for (var i = 4; i >= 1; i--) {
+      canvas.drawCircle(
+        center,
+        s * 0.09 * i,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = s * 0.014
+          ..color = i.isEven ? palette.primary : palette.accent,
       );
     }
-    canvas.restore();
+    canvas
+      ..drawCircle(center, s * 0.05, Paint()..color = palette.accent)
+      ..drawCircle(center, s * 0.02, Paint()..color = const Color(0xFF111111));
+
+    canvas
+      ..save()
+      ..translate(center.dx, center.dy + s * 0.12)
+      ..rotate(-math.pi / 3 + random.nextDouble() * 0.5)
+      ..drawRect(
+        Rect.fromCenter(
+          center: Offset(0, -s * 0.06),
+          width: s * 1.8,
+          height: s * 0.1,
+        ),
+        Paint()..color = palette.accent,
+      )
+      ..drawRect(
+        Rect.fromCenter(
+          center: Offset(0, s * 0.07),
+          width: s * 1.8,
+          height: s * 0.07,
+        ),
+        Paint()..color = palette.primary,
+      )
+      ..restore();
+
+    final base = Offset(w * (0.3 + random.nextDouble() * 0.3), h * 0.84);
+    canvas
+      ..drawArc(
+        Rect.fromCircle(center: base, radius: s * 0.12),
+        0,
+        math.pi,
+        true,
+        Paint()..color = palette.primary,
+      )
+      ..drawLine(
+        Offset(base.dx - s * 0.15, base.dy),
+        Offset(base.dx + s * 0.35, base.dy),
+        Paint()
+          ..color = palette.accent
+          ..strokeWidth = s * 0.008,
+      );
   }
 
   @override
