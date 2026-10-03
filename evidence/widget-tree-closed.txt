@@ -1,0 +1,40 @@
+# Árbol de widgets — Duo cerrado (pantalla externa, vertical)
+
+Herramienta: Dart & Flutter MCP server 1.1.2 — `widget_inspector get_widget_tree` (summaryOnly: true)
+Conexión:    `dtd listDtdUris` + `dtd connect` (sin pedir la URI a mano)
+Dispositivo: iPhone Duo (simulador, iOS 27.1) — cerrado, vertical
+App:         fvm flutter run (Flutter 3.47.4) — rama cd-catalog
+Fecha:       2026-10-03
+
+## Árbol resumido (widgets del proyecto)
+
+DuoAdaptiveApp
+└─ FoldableProvider → DuoMediaQuery → MaterialApp
+   └─ CatalogLoader → FutureBuilder<List<Album>>
+      └─ CatalogScreen → ListenableBuilder → Scaffold
+         ├─ AppBar
+         │  ├─ VaultTitle: "ARCHIVE / DISCOTHEQUE" · "Curated Vault"
+         │  └─ FavoritesBadge → Text[favorites-count] "2"
+         └─ CoverCarousel → Column
+            ├─ Expanded → PageView → _CoverPage
+            │  ├─ GeneratedCover (CustomPaint)
+            │  ├─ Text "SAL Y MILETO"
+            │  ├─ AlbumTitle "Disko 0"
+            │  ├─ Text "2001 · Ecuador"
+            │  └─ Wrap → ArchiveChip "CD · ALBUM"
+            └─ SafeArea → _PageDots (5) · FavoriteButton[favorite-toggle] · FilledButton[open-details] "VER FICHA Y TRACKS"
+
+## Prueba de estado con Agentic Hot Reload
+
+1. Estado puesto por el desarrollador: tercer disco (Disko 0) y 2 favoritos.
+2. Cambio: `lib/widgets/vault_title.dart`, 'Curated Vault' → 'Curated Discs'.
+3. MCP `hot_reload` → "Hot reload succeeded." (la terminal de flutter run no imprime nada).
+4. Árbol después del reload: el encabezado dice "Curated Discs", `favorites-count` sigue en "2" y el
+   disco visible sigue siendo "Disko 0". La app no se reinició.
+5. Se revierte a 'Curated Vault' con otro `hot_reload`; `get_runtime_errors` → "No runtime errors found."
+
+## Observaciones
+
+- Disko 0 muestra solo la pastilla de formato: Discogs registra su catálogo como "none", que el modelo
+  trata como ausente.
+- El modo de dos paneles todavía no existe (Task 9).
