@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foldable/foldable.dart';
 
-import 'screens/catalog_screen.dart';
+import 'screens/catalog_loader.dart';
+import 'theme/app_theme.dart';
 
 void main() {
   runApp(const DuoAdaptiveApp());
@@ -14,10 +15,10 @@ class DuoAdaptiveApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return FoldableProvider(
       child: MaterialApp(
-        title: 'Products',
+        title: 'CD Catalog',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(colorSchemeSeed: Colors.indigo, useMaterial3: true),
-        home: const CatalogScreen(),
+        theme: buildAppTheme(),
+        home: const CatalogLoader(),
       ),
     );
   }
