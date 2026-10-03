@@ -40,8 +40,10 @@ Dart & Flutter MCP server y Agentic Hot Reload en acción.
 | Cultura Profética — *La Dulzura* (2010) | 8172924 | CD Puerto Rico, La Mafafa |
 
 Los datos se descargan **una vez** con `tool/fetch_discogs.dart` y se versionan en
-`assets/discogs/<release_id>.json` tal cual los devuelve la API. La app nunca
-llama a la red.
+`assets/discogs/<release_id>.json`. El script guarda **solo los campos CC0** que
+usa la app (título, artistas, año, país, sellos, formatos, géneros, estilos,
+tracklist, créditos, notas); descarta las URLs de imágenes y los datos de
+comunidad y de marketplace, que no son CC0. La app nunca llama a la red.
 
 ## Experiencia por pose
 
@@ -71,7 +73,8 @@ reporta y no se ajusta a mano.
 - **Panel derecho (detalle):** pestañas **Tracks · Créditos · Ficha · Notas**.
   - *Tracks:* tarjetas oscuras con posición y título; la duración se muestra solo
     si viene en el dato.
-  - *Créditos:* nombre y rol (`extraartists`).
+  - *Créditos:* nombre y rol (`extraartists`); si no hay, "Sin créditos en
+    Discogs".
   - *Ficha:* año, país, sello y número de catálogo, formato, géneros y estilos.
   - *Notas:* el campo `notes` de Discogs; si viene vacío, la pestaña muestra
     "Sin notas en Discogs".
@@ -105,7 +108,7 @@ dispositivo, que es lo que exige el skill.
 tool/
 └── fetch_discogs.dart          # descarga los 5 releases → assets/discogs/
 assets/discogs/
-├── <release_id>.json           # 5 archivos, JSON de Discogs sin modificar
+├── <release_id>.json           # 5 archivos, solo campos CC0 de Discogs
 └── ATTRIBUTION.md
 lib/
 ├── main.dart                   # FoldableProvider + MaterialApp (tema oscuro)
@@ -114,8 +117,12 @@ lib/
 ├── data/album_palettes.dart    # paleta de portada por release_id
 ├── layout/layout_mode.dart     # función pura: (ancho, postura, pliegue) → modo
 ├── state/selection.dart        # disco seleccionado + favoritos (ChangeNotifier)
-├── screens/catalog_screen.dart # LayoutBuilder → CoverCarousel | DualPaneView
+├── theme/app_theme.dart        # tema oscuro y estilo de títulos
+├── screens/catalog_loader.dart # carga los discos, pantalla de error, dueño de Selection
+├── screens/catalog_screen.dart # LayoutBuilder → CoverCarousel | dos paneles
 └── widgets/
+    ├── favorites_badge.dart    # contador ❤️ N
+    ├── pose_badge.dart         # texto de diagnóstico (postura · ancho · modo), legible por MCP
     ├── generated_cover.dart    # CustomPaint de la portada
     ├── cover_carousel.dart     # modo compacto
     ├── album_hero_pane.dart    # panel izquierdo
