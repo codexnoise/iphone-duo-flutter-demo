@@ -47,3 +47,6 @@ app.*.map.json
 # FVM Version Cache
 .fvm/
 
+
+# Export completo de Google Stitch (las referencias versionadas están en docs/design/stitch/)
+stitch_editorial_music_collector_app/
