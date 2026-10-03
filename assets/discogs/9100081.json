@@ -1,0 +1,135 @@
+{
+  "id": 9100081,
+  "uri": "https://www.discogs.com/release/9100081-Sal-Y-Mileto-Disko-0",
+  "title": "Disko 0",
+  "artists": [
+    {
+      "name": "Sal Y Mileto",
+      "anv": ""
+    }
+  ],
+  "year": 2001,
+  "released": "2001",
+  "country": "Ecuador",
+  "labels": [
+    {
+      "name": "Not On Label (Sal Y Mileto Self-released)",
+      "catno": "none"
+    }
+  ],
+  "formats": [
+    {
+      "name": "CD",
+      "qty": "1",
+      "descriptions": [
+        "Album"
+      ]
+    }
+  ],
+  "genres": [
+    "Rock",
+    "Latin"
+  ],
+  "styles": [],
+  "tracklist": [
+    {
+      "position": "1",
+      "title": "Avisos Klasificados (En El Abaniko De Beatriz)",
+      "duration": "10:57",
+      "type_": "track"
+    },
+    {
+      "position": "2",
+      "title": "Ekuatoriano Que Triunfa En New York ",
+      "duration": "2:35",
+      "type_": "track"
+    },
+    {
+      "position": "3",
+      "title": "Kito Con K  ",
+      "duration": "5:42",
+      "type_": "track"
+    },
+    {
+      "position": "4",
+      "title": "Cessio",
+      "duration": "9:28",
+      "type_": "track"
+    },
+    {
+      "position": "5",
+      "title": "Polución Nokturna  ",
+      "duration": "4:05",
+      "type_": "track"
+    },
+    {
+      "position": "6",
+      "title": "Panelita  ",
+      "duration": "3:40",
+      "type_": "track"
+    },
+    {
+      "position": "7",
+      "title": "Variaciones Sobre La Bomba Del Chota  ",
+      "duration": "4:08",
+      "type_": "track"
+    },
+    {
+      "position": "8",
+      "title": "San Kamilo  ",
+      "duration": "7:44",
+      "type_": "track"
+    },
+    {
+      "position": "9",
+      "title": "A Propósito De Un Día Komún  ",
+      "duration": "2:52",
+      "type_": "track"
+    },
+    {
+      "position": "10",
+      "title": "Kuervo Mio",
+      "duration": "2:19",
+      "type_": "track"
+    }
+  ],
+  "extraartists": [
+    {
+      "name": "Cesar Albarracín",
+      "anv": "",
+      "role": "Bass",
+      "tracks": ""
+    },
+    {
+      "name": "Igor Icaza",
+      "anv": "",
+      "role": "Drum",
+      "tracks": ""
+    },
+    {
+      "name": "Paúl Segovia",
+      "anv": "",
+      "role": "Guitar, Voice",
+      "tracks": ""
+    },
+    {
+      "name": "Juan Carlos Portugal",
+      "anv": "",
+      "role": "Musical Assistance",
+      "tracks": ""
+    },
+    {
+      "name": "Peky Andino",
+      "anv": "Peky Andino Moscoso",
+      "role": "Producer",
+      "tracks": ""
+    },
+    {
+      "name": "Juan Pablo Rivas",
+      "anv": "Juan Pablo Rivas D'Aniello",
+      "role": "Technician",
+      "tracks": ""
+    }
+  ],
+  "notes": "* Fueron Parte De La Obra Kito Con K"
+}

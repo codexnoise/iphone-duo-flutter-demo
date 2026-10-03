@@ -1,0 +1,805 @@
+{
+  "id": 13115020,
+  "uri": "https://www.discogs.com/release/13115020-Daft-Punk-Random-Access-Memories",
+  "title": "Random Access Memories",
+  "artists": [
+    {
+      "name": "Daft Punk",
+      "anv": ""
+    }
+  ],
+  "year": 2013,
+  "released": "2013-05-17",
+  "country": "Europe",
+  "labels": [
+    {
+      "name": "Columbia",
+      "catno": "88883716862"
+    },
+    {
+      "name": "Sony Music",
+      "catno": "88883716862"
+    }
+  ],
+  "formats": [
+    {
+      "name": "CD",
+      "qty": "1",
+      "descriptions": [
+        "Album"
+      ]
+    }
+  ],
+  "genres": [
+    "Electronic",
+    "Funk / Soul",
+    "Pop"
+  ],
+  "styles": [
+    "Disco",
+    "Funk",
+    "Electro",
+    "Synth-pop"
+  ],
+  "tracklist": [
+    {
+      "position": "1",
+      "title": "Give Life Back To Music",
+      "duration": "4:35",
+      "type_": "track"
+    },
+    {
+      "position": "2",
+      "title": "The Game Of Love",
+      "duration": "5:22",
+      "type_": "track"
+    },
+    {
+      "position": "3",
+      "title": "Giorgio By Moroder",
+      "duration": "9:04",
+      "type_": "track"
+    },
+    {
+      "position": "4",
+      "title": "Within",
+      "duration": "3:48",
+      "type_": "track"
+    },
+    {
+      "position": "5",
+      "title": "Instant Crush",
+      "duration": "5:37",
+      "type_": "track"
+    },
+    {
+      "position": "6",
+      "title": "Lose Yourself To Dance",
+      "duration": "5:53",
+      "type_": "track"
+    },
+    {
+      "position": "7",
+      "title": "Touch",
+      "duration": "8:18",
+      "type_": "track"
+    },
+    {
+      "position": "8",
+      "title": "Get Lucky",
+      "duration": "6:09",
+      "type_": "track"
+    },
+    {
+      "position": "9",
+      "title": "Beyond",
+      "duration": "4:50",
+      "type_": "track"
+    },
+    {
+      "position": "10",
+      "title": "Motherboard",
+      "duration": "5:41",
+      "type_": "track"
+    },
+    {
+      "position": "11",
+      "title": "Fragments Of Time",
+      "duration": "4:39",
+      "type_": "track"
+    },
+    {
+      "position": "12",
+      "title": "Doin' It Right",
+      "duration": "4:11",
+      "type_": "track"
+    },
+    {
+      "position": "13",
+      "title": "Contact",
+      "duration": "6:21",
+      "type_": "track"
+    }
+  ],
+  "extraartists": [
+    {
+      "name": "Chris Caswell (2)",
+      "anv": "",
+      "role": "Arranged By [Arrangements]",
+      "tracks": ""
+    },
+    {
+      "name": "Guy-Manuel de Homem-Christo",
+      "anv": "",
+      "role": "Arranged By [Arrangements]",
+      "tracks": ""
+    },
+    {
+      "name": "Thomas Bangalter",
+      "anv": "",
+      "role": "Arranged By [Arrangements]",
+      "tracks": ""
+    },
+    {
+      "name": "Craig Gosnell",
+      "anv": "",
+      "role": "Bass Trombone [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Chuck Berghofer",
+      "anv": "Charles Berghofer",
+      "role": "Bass [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Donald V. Ferrone",
+      "anv": "Don Ferrone",
+      "role": "Bass [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Drew Dembowski",
+      "anv": "",
+      "role": "Bass [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Judy Farmer",
+      "anv": "Judith Farmer",
+      "role": "Bassoon [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Armen Ksajikian",
+      "anv": "",
+      "role": "Cello [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Christina Soule",
+      "anv": "",
+      "role": "Cello [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Paula Hochhalter",
+      "anv": "Paula Hochalter",
+      "role": "Cello [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Timothy Loo",
+      "anv": "",
+      "role": "Cello [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Vanessa Freebairn-Smith",
+      "anv": "Vanessa F. Smith",
+      "role": "Cello [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Marty Krystall",
+      "anv": "",
+      "role": "Clarinet [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Gene Cipriano",
+      "anv": "",
+      "role": "Clarinet [Orchestra], Bass Clarinet [B. Clarinet (Orchestra)]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Doug Walter",
+      "anv": "Douglas Walter",
+      "role": "Conductor [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Jean-Pierre Janiaud",
+      "anv": "",
+      "role": "Consultant [Audio Consultant]",
+      "tracks": ""
+    },
+    {
+      "name": "Joseph Solido",
+      "anv": "",
+      "role": "Contractor [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Jackie O'Brien",
+      "anv": "",
+      "role": "Coordinator [Production Coordinator]",
+      "tracks": ""
+    },
+    {
+      "name": "Sam Cooper (3)",
+      "anv": "",
+      "role": "Coordinator [Production Coordinator]",
+      "tracks": ""
+    },
+    {
+      "name": "Cedric Hervet",
+      "anv": "Cédric Hervet",
+      "role": "Cover [Cover Art]",
+      "tracks": ""
+    },
+    {
+      "name": "Warren Fu",
+      "anv": "",
+      "role": "Cover [Cover Art]",
+      "tracks": ""
+    },
+    {
+      "name": "Cedric Hervet",
+      "anv": "Cédric Hervet",
+      "role": "Creative Director",
+      "tracks": ""
+    },
+    {
+      "name": "Biz3",
+      "anv": "Biz 3",
+      "role": "Creative Director [Media Director]",
+      "tracks": ""
+    },
+    {
+      "name": "Kathryn Frazier",
+      "anv": "",
+      "role": "Creative Director [Media Director]",
+      "tracks": ""
+    },
+    {
+      "name": "Cedric Hervet",
+      "anv": "Cédric Hervet",
+      "role": "Design Concept [Concept], Art Direction",
+      "tracks": ""
+    },
+    {
+      "name": "Guy-Manuel de Homem-Christo",
+      "anv": "",
+      "role": "Design Concept [Concept], Art Direction",
+      "tracks": ""
+    },
+    {
+      "name": "Paul Hahn",
+      "anv": "",
+      "role": "Design Concept [Concept], Art Direction",
+      "tracks": ""
+    },
+    {
+      "name": "Thomas Bangalter",
+      "anv": "",
+      "role": "Design Concept [Concept], Art Direction",
+      "tracks": ""
+    },
+    {
+      "name": "Warren Fu",
+      "anv": "",
+      "role": "Design Concept [Concept], Art Direction",
+      "tracks": ""
+    },
+    {
+      "name": "David Channing",
+      "anv": "",
+      "role": "Edited By [Music Editor]",
+      "tracks": ""
+    },
+    {
+      "name": "Daniel Lerner",
+      "anv": "",
+      "role": "Engineer [Digital Audio Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "David Kossoff (2)",
+      "anv": "David Kosoff",
+      "role": "English Horn [E. Horn (Orchestra)]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Greg Huckins",
+      "anv": "",
+      "role": "Flute [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Sara Andon",
+      "anv": "",
+      "role": "Flute [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Steve Kajala",
+      "anv": "",
+      "role": "Flute [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Danielle Ondarza",
+      "anv": "",
+      "role": "French Horn [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Jim Atkinson",
+      "anv": "James Atkinson",
+      "role": "French Horn [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Justin Hageman",
+      "anv": "",
+      "role": "French Horn [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Nathan Campbell",
+      "anv": "",
+      "role": "French Horn [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Stephanie O'Keefe",
+      "anv": "",
+      "role": "French Horn [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Warren Fu",
+      "anv": "",
+      "role": "Illustration",
+      "tracks": ""
+    },
+    {
+      "name": "Clintons",
+      "anv": "Clintons UK",
+      "role": "Legal",
+      "tracks": ""
+    },
+    {
+      "name": "Peter Button",
+      "anv": "",
+      "role": "Legal",
+      "tracks": ""
+    },
+    {
+      "name": "Paul Hahn",
+      "anv": "",
+      "role": "Management",
+      "tracks": ""
+    },
+    {
+      "name": "Bob Ludwig",
+      "anv": "",
+      "role": "Mastered By",
+      "tracks": ""
+    },
+    {
+      "name": "Chab (2)",
+      "anv": "",
+      "role": "Mastered By",
+      "tracks": ""
+    },
+    {
+      "name": "Mick Guzauski",
+      "anv": "",
+      "role": "Mixed By",
+      "tracks": ""
+    },
+    {
+      "name": "Peter Franco",
+      "anv": "",
+      "role": "Mixed By [Assistant Mixing Engineer], Engineer [Assistant Mixing Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Seth Waldmann",
+      "anv": "",
+      "role": "Mixed By [Assistant Mixing Engineer], Engineer [Assistant Mixing Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Earl Dumler",
+      "anv": "",
+      "role": "Oboe [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Chris Caswell (2)",
+      "anv": "",
+      "role": "Orchestrated By [Orchestration], Other [Booth (Orchestra)]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Brian Kilgore",
+      "anv": "Brian Kilmore",
+      "role": "Percussion [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Mark Converse",
+      "anv": "",
+      "role": "Percussion [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Guy-Manuel de Homem-Christo",
+      "anv": "",
+      "role": "Producer",
+      "tracks": ""
+    },
+    {
+      "name": "Thomas Bangalter",
+      "anv": "",
+      "role": "Producer",
+      "tracks": ""
+    },
+    {
+      "name": "Florian Lagatta",
+      "anv": "",
+      "role": "Recorded By",
+      "tracks": ""
+    },
+    {
+      "name": "Mick Guzauski",
+      "anv": "",
+      "role": "Recorded By",
+      "tracks": ""
+    },
+    {
+      "name": "Peter Franco",
+      "anv": "",
+      "role": "Recorded By",
+      "tracks": ""
+    },
+    {
+      "name": "Alana Da Fonseca",
+      "anv": "",
+      "role": "Recorded By [Additional Recording Engineer], Engineer [Additional Recording Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Phil Joly",
+      "anv": "",
+      "role": "Recorded By [Additional Recording Engineer], Engineer [Additional Recording Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Bill Rahko",
+      "anv": "",
+      "role": "Recorded By [Assistant Recording Engineer], Engineer [Assistant Recording Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Charlie Paakkari",
+      "anv": "Charlie Pakkari",
+      "role": "Recorded By [Assistant Recording Engineer], Engineer [Assistant Recording Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Cory Brice",
+      "anv": "",
+      "role": "Recorded By [Assistant Recording Engineer], Engineer [Assistant Recording Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Derek Karlquist",
+      "anv": "",
+      "role": "Recorded By [Assistant Recording Engineer], Engineer [Assistant Recording Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Doug Tyo",
+      "anv": "",
+      "role": "Recorded By [Assistant Recording Engineer], Engineer [Assistant Recording Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Eric Eylands",
+      "anv": "",
+      "role": "Recorded By [Assistant Recording Engineer], Engineer [Assistant Recording Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Eric Weaver",
+      "anv": "",
+      "role": "Recorded By [Assistant Recording Engineer], Engineer [Assistant Recording Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Kevin Mills",
+      "anv": "",
+      "role": "Recorded By [Assistant Recording Engineer], Engineer [Assistant Recording Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Kyle Stevens (3)",
+      "anv": "",
+      "role": "Recorded By [Assistant Recording Engineer], Engineer [Assistant Recording Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Miguel Lara (2)",
+      "anv": "",
+      "role": "Recorded By [Assistant Recording Engineer], Engineer [Assistant Recording Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Mike Larson (4)",
+      "anv": "",
+      "role": "Recorded By [Assistant Recording Engineer], Engineer [Assistant Recording Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Nicolas Essig",
+      "anv": "",
+      "role": "Recorded By [Assistant Recording Engineer], Engineer [Assistant Recording Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Seth Waldmann",
+      "anv": "",
+      "role": "Recorded By [Assistant Recording Engineer], Engineer [Assistant Recording Engineer]",
+      "tracks": ""
+    },
+    {
+      "name": "Gus Koven",
+      "anv": "",
+      "role": "Sound Designer",
+      "tracks": ""
+    },
+    {
+      "name": "Andy Martin",
+      "anv": "Andrew Martin",
+      "role": "Trombone [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Bob McChesney",
+      "anv": "",
+      "role": "Trombone [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Charles Loper",
+      "anv": "Charles Looper",
+      "role": "Trombone [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Charlie Morillas",
+      "anv": "Charles Morillas",
+      "role": "Trombone [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Chuck Findley",
+      "anv": "Charles Findley",
+      "role": "Trumpet [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Gary Grant",
+      "anv": "",
+      "role": "Trumpet [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Larry McGuire",
+      "anv": "",
+      "role": "Trumpet [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Warren Luening",
+      "anv": "",
+      "role": "Trumpet [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Alma Fernandez",
+      "anv": "",
+      "role": "Viola [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Andrew Picken",
+      "anv": "",
+      "role": "Viola [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Carolyn Riley",
+      "anv": "",
+      "role": "Viola [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Harry Shirinian",
+      "anv": "",
+      "role": "Viola [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Jody Rubin",
+      "anv": "",
+      "role": "Viola [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Ray Tischer",
+      "anv": "",
+      "role": "Viola [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Rodney Wirtz",
+      "anv": "",
+      "role": "Viola [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Roland Kato",
+      "anv": "",
+      "role": "Viola [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Audrey Solomon",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Calabria McChesney",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Carrie Kennedy",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Cindy Moussas",
+      "anv": "Cynthia Moussas",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Irina Voloshina",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Joel Pargman",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Johana Krejci",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Kevin Connolly",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Lisa Dondlinger",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Lisa Sutton",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Margaret Wooten",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Mary Sloan",
+      "anv": "Mary K. Sloan",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Miwako Watanabe",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Neel Hammond",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Nina Evtuhov",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Olivia Tsui",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Rafael Rishik",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Rita Weber",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Samuel Fischer",
+      "anv": "",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Sara Parkins",
+      "anv": "Sara Perkins",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Songa Lee",
+      "anv": "Song Lee",
+      "role": "Violin [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    },
+    {
+      "name": "Assa Drori",
+      "anv": "Assa Dori",
+      "role": "Violin [Orchestra], Concertmaster [Orchestra]",
+      "tracks": "3, 7, 9, 10"
+    }
+  ],
+  "notes": "©2013 & ℗2013 Daft Life Limited under exclusive license to Columbia Records, a Division of Sony Music Entertainment\nDistributed by Sony Music Entertainment.\nDystrybucja w Polsce: Sony Music Entertainment Poland Sp. z o.o., ul. Chóralna 14, 02-879 Warszawa.\nMade in the EU.\n\nThe booklet includes the lyrics to all songs.\n\nReleased with a sticker on the front, in three different ways:\n\nVariation 1 (sticker on plastic wrap):\nFeat. Get Lucky & Lose Yourself To Dance\nDaft Punk\n88883716862-1\n\nVariation 2 (sticker on jewel case):\nFeat. Get Lucky & Lose Yourself To Dance\nDaft Punk\n88883716862-2\n\nVariation 3 (sticker on jewel case):\nFeat. Get Lucky & Lose Yourself To Dance\nDaft Punk\n88883716862\n\nRecorded at Gang Recording Studio, Paris; Henson Recording Studios, Hollywood; Conway Recording Studios, Hollywood; Electric Lady Studios, New York & Capitol Studios, Hollywood\n\nMixed at Conway Studios, Hollywood\n\nMastered by Bob Ludwig at Gateway Mastering Studios, Portland, ME & Chab at Translab, Paris\n\nPublishers:\n\nTrack 1: Imagem Music for the world excluding France, Daft Music / Because Music for France, XLC Music (BMI), Miss Mittie Music (BMI)\n\nTrack 2: Imagem Music for the world excluding France, Daft Music / Because Music for France\n\nTrack 3: Imagem Music for the world excluding France, Daft Music / Because Music for France, Giorgio Moroder Publishing (ASCAP)\n\nTrack 4: Imagem Music for the world excluding France, Daft Music / Because Music for France, EMI Music Publishing\n\nTrack 5: Imagem Music for the world excluding France, Daft Music / Because Music for France, Julian Casablancas Publishing (ASCAP) for North America & Warner/Chappell Music Publishing Limited for rest of the world\nJulian Casablancas appears courtesy of Rough Trade / RCA Records\n\nTrack 6: Imagem Music for the world excluding France, Daft Music / Because Music for France, XLC Music (BMI), EMI April Music, Inc. obo itself and More Water From Nazareth (ASCAP)\n\nTrack 7: Imagem Music for the world excluding France, Daft Music / Because Music for France, Sunset Squid Music, Kazz Song, Inc\n\nTrack 8: Imagem Music for the world excluding France, Daft Music / Because Music for France, XLC Music (BMI), EMI April Music, Inc. obo itself and More Water From Nazareth (ASCAP)\n\nTrack 9: Imagem Music for the world excluding France, Daft Music / Because Music for France, Sunset Squid Music, Kazz Song, Inc.\n\nTrack 10: Imagem Music for the world excluding France, Daft Music / Because Music for France\n\nTrack 11: Imagem Music for the world excluding France, Daft Music / Because Music for France, Todd Imperatrice (ASCAP)\n\nTrack 12: Imagem Music for the world excluding France, Daft Music / Because Music for France, Panda Lennox (ASCAP) published by Chrysalis\nPanda Bear appears courtesy of Domino Records\n\nTrack 13: Imagem Music for the world excluding France, Daft Music / Because Music for France, Stephane Queme, Perfect Pitch Music Publishing (ASCAP)\nContains a sample from The Sherbs recording \"We Ride Tonight\" produced under license from Liberation Music Pty Ltd and used by courtesy of Atlantic Recording Corp. under license from Rhino Entertainment Company, a Warner Music Group Company.\nContains audio from the Apollo 17 mission used by courtesy of NASA and Capt. Eugene Cernan.\n\nSimilar release:\n- [url=http://www.discogs.com/release/4570505]UK & Europe, pressed by Sony DADC UK[/url]"
+}

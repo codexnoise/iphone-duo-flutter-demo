@@ -1,0 +1,132 @@
+{
+  "id": 11066248,
+  "uri": "https://www.discogs.com/release/11066248-Gondwana-4-Alabanza-Por-La-Fuerza-De-La-Razón",
+  "title": "Alabanza - Por La Fuerza De La Razón",
+  "artists": [
+    {
+      "name": "Gondwana (4)",
+      "anv": ""
+    }
+  ],
+  "year": 2000,
+  "released": "2000",
+  "country": "Chile",
+  "labels": [
+    {
+      "name": "BMG Chile S.A.",
+      "catno": "74321 72300 2"
+    }
+  ],
+  "formats": [
+    {
+      "name": "CD",
+      "qty": "1",
+      "descriptions": [
+        "Album"
+      ]
+    }
+  ],
+  "genres": [
+    "Rock",
+    "Reggae",
+    "Folk, World, & Country"
+  ],
+  "styles": [
+    "Reggae"
+  ],
+  "tracklist": [
+    {
+      "position": "1",
+      "title": "Alabanza",
+      "duration": "",
+      "type_": "track"
+    },
+    {
+      "position": "2",
+      "title": "Keep The Faith",
+      "duration": "",
+      "type_": "track"
+    },
+    {
+      "position": "3",
+      "title": "Jah Guide",
+      "duration": "",
+      "type_": "track"
+    },
+    {
+      "position": "4",
+      "title": "Mártires",
+      "duration": "",
+      "type_": "track"
+    },
+    {
+      "position": "5",
+      "title": "Libros Sagrados",
+      "duration": "",
+      "type_": "track"
+    },
+    {
+      "position": "6",
+      "title": "Traficantes De Fé",
+      "duration": "",
+      "type_": "track"
+    },
+    {
+      "position": "7",
+      "title": "Antonia",
+      "duration": "",
+      "type_": "track"
+    },
+    {
+      "position": "8",
+      "title": "Dulce Amor (Sólo Un Latido)",
+      "duration": "",
+      "type_": "track"
+    },
+    {
+      "position": "9",
+      "title": "Defendamos",
+      "duration": "",
+      "type_": "track"
+    },
+    {
+      "position": "10",
+      "title": "Verde, Amarillo Y Rojo",
+      "duration": "",
+      "type_": "track"
+    },
+    {
+      "position": "11",
+      "title": "Sólo Es Verdadero (El Amor De JAH)",
+      "duration": "",
+      "type_": "track"
+    },
+    {
+      "position": "12",
+      "title": "Libertad",
+      "duration": "",
+      "type_": "track"
+    }
+  ],
+  "extraartists": [
+    {
+      "name": "Gondwana (4)",
+      "anv": "",
+      "role": "Arranged By",
+      "tracks": ""
+    },
+    {
+      "name": "Dr. Dread",
+      "anv": "",
+      "role": "Producer",
+      "tracks": ""
+    },
+    {
+      "name": "Joaquín García",
+      "anv": "",
+      "role": "Recorded By",
+      "tracks": ""
+    }
+  ],
+  "notes": "℗ y © 2000 BMG Chile S.A."
+}

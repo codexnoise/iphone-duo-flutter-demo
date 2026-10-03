@@ -1,0 +1,250 @@
+{
+  "id": 4214311,
+  "uri": "https://www.discogs.com/release/4214311-Gorillaz-Gorillaz",
+  "title": "Gorillaz",
+  "artists": [
+    {
+      "name": "Gorillaz",
+      "anv": ""
+    }
+  ],
+  "year": 2001,
+  "released": "2001",
+  "country": "Argentina",
+  "labels": [
+    {
+      "name": "Parlophone",
+      "catno": "7243 534488 0 6"
+    }
+  ],
+  "formats": [
+    {
+      "name": "CD",
+      "qty": "1",
+      "descriptions": [
+        "Album",
+        "Enhanced"
+      ]
+    }
+  ],
+  "genres": [
+    "Electronic",
+    "Hip Hop",
+    "Rock",
+    "Latin",
+    "Funk / Soul",
+    "Pop"
+  ],
+  "styles": [
+    "Leftfield",
+    "Trip Hop",
+    "Lo-Fi",
+    "Experimental",
+    "Alternative Rock",
+    "Dub",
+    "Punk"
+  ],
+  "tracklist": [
+    {
+      "position": "1",
+      "title": "Re-Hash",
+      "duration": "3:40",
+      "type_": "track"
+    },
+    {
+      "position": "2",
+      "title": "5/4",
+      "duration": "2:42",
+      "type_": "track"
+    },
+    {
+      "position": "3",
+      "title": "Tomorrow Comes Today",
+      "duration": "3:14",
+      "type_": "track"
+    },
+    {
+      "position": "4",
+      "title": "New Genious (Brother)",
+      "duration": "3:59",
+      "type_": "track"
+    },
+    {
+      "position": "5",
+      "title": "Clint Eastwood",
+      "duration": "5:43",
+      "type_": "track"
+    },
+    {
+      "position": "6",
+      "title": "Man Research (Clapper)",
+      "duration": "4:32",
+      "type_": "track"
+    },
+    {
+      "position": "7",
+      "title": "Punk",
+      "duration": "1:38",
+      "type_": "track"
+    },
+    {
+      "position": "8",
+      "title": "Sound Check (Gravity)",
+      "duration": "4:42",
+      "type_": "track"
+    },
+    {
+      "position": "9",
+      "title": "Double Bass",
+      "duration": "4:46",
+      "type_": "track"
+    },
+    {
+      "position": "10",
+      "title": "Rock The House",
+      "duration": "4:11",
+      "type_": "track"
+    },
+    {
+      "position": "11",
+      "title": "19-2000",
+      "duration": "3:29",
+      "type_": "track"
+    },
+    {
+      "position": "12",
+      "title": "Latin Simone (Que Pasa Contigo)",
+      "duration": "3:38",
+      "type_": "track"
+    },
+    {
+      "position": "13",
+      "title": "Starshine",
+      "duration": "3:33",
+      "type_": "track"
+    },
+    {
+      "position": "14",
+      "title": "Slow Country",
+      "duration": "3:37",
+      "type_": "track"
+    },
+    {
+      "position": "15",
+      "title": "M1 A1",
+      "duration": "4:01",
+      "type_": "track"
+    },
+    {
+      "position": "16",
+      "title": "Clint Eastwood (Ed Case/Sweetie Irie Re-fix) (Edit)",
+      "duration": "3:43",
+      "type_": "track"
+    },
+    {
+      "position": "17",
+      "title": "19-2000 (Soulchild Remix)",
+      "duration": "3:29",
+      "type_": "track"
+    }
+  ],
+  "extraartists": [
+    {
+      "name": "Jason Cox",
+      "anv": "",
+      "role": "Co-producer",
+      "tracks": "1 to 12, 14 to 17"
+    },
+    {
+      "name": "Tom Girling",
+      "anv": "",
+      "role": "Co-producer",
+      "tracks": "1 to 12, 14 to 17"
+    },
+    {
+      "name": "Jason Cox",
+      "anv": "",
+      "role": "Engineer",
+      "tracks": ""
+    },
+    {
+      "name": "Tom Girling",
+      "anv": "",
+      "role": "Engineer",
+      "tracks": ""
+    },
+    {
+      "name": "Toby Whelan",
+      "anv": "",
+      "role": "Engineer [Assistant]",
+      "tracks": ""
+    },
+    {
+      "name": "Tom Girling",
+      "anv": "",
+      "role": "Engineer [Protools]",
+      "tracks": ""
+    },
+    {
+      "name": "Damien Mendis",
+      "anv": "",
+      "role": "Producer",
+      "tracks": "17"
+    },
+    {
+      "name": "Dan The Automator",
+      "anv": "",
+      "role": "Producer",
+      "tracks": "1 to 12, 14 to 16"
+    },
+    {
+      "name": "Gorillaz",
+      "anv": "",
+      "role": "Producer",
+      "tracks": "1 to 12, 14 to 16"
+    },
+    {
+      "name": "Jason Cox",
+      "anv": "",
+      "role": "Producer",
+      "tracks": "13"
+    },
+    {
+      "name": "Tom Girling",
+      "anv": "",
+      "role": "Producer",
+      "tracks": "13"
+    },
+    {
+      "name": "2D (3)",
+      "anv": "",
+      "role": "Written-By, Performer",
+      "tracks": ""
+    },
+    {
+      "name": "Gorillaz",
+      "anv": "",
+      "role": "Written-By, Performer",
+      "tracks": ""
+    },
+    {
+      "name": "Murdoc Niccals",
+      "anv": "Murdoc",
+      "role": "Written-By, Performer",
+      "tracks": ""
+    },
+    {
+      "name": "Noodle (2)",
+      "anv": "",
+      "role": "Written-By, Performer",
+      "tracks": ""
+    },
+    {
+      "name": "Russel Hobbs",
+      "anv": "Russel",
+      "role": "Written-By, Performer",
+      "tracks": ""
+    }
+  ],
+  "notes": "Photography by Ed Reeve & Jow@spiritproductions.\n\nRecorded at Gee Jam Studios, Jamaica\nTrack 16 Refixed at Middle Row Studios.\nTrack 17 Planted and detonated at The Hit Room, UK\n\nTrack 4, \"New Genious (Brother)\", contains portions of \"Hit or Miss\" by [a=Odetta].\nTrack 10,\"Rock The House\", contains portions from \"Modesty Blaise\" written by J. Dankworth.\nTrack 15,\"M1 A1\", contains portions of the film \"Day Of The Dead\", music written by John Harrison.\n\nCD includes a small multimedia section with links to the Gorillaz website\n\nHype Sticker Printed on Cover.\n\nSimilar to Sonopress Release. Check it in here. [r31820222]\n"
+}

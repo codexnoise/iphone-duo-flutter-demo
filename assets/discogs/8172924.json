@@ -1,0 +1,111 @@
+{
+  "id": 8172924,
+  "uri": "https://www.discogs.com/release/8172924-Cultura-Profética-La-Dulzura",
+  "title": "La Dulzura",
+  "artists": [
+    {
+      "name": "Cultura Profética",
+      "anv": ""
+    }
+  ],
+  "year": 2010,
+  "released": "2010",
+  "country": "Puerto Rico",
+  "labels": [
+    {
+      "name": "La Mafafa",
+      "catno": "LAFA 8771"
+    }
+  ],
+  "formats": [
+    {
+      "name": "CD",
+      "qty": "1",
+      "descriptions": [
+        "Album"
+      ]
+    }
+  ],
+  "genres": [
+    "Reggae",
+    "Latin"
+  ],
+  "styles": [
+    "Roots Reggae"
+  ],
+  "tracklist": [
+    {
+      "position": "1",
+      "title": "Rimas pa' Seducir",
+      "duration": "3:06",
+      "type_": "track"
+    },
+    {
+      "position": "2",
+      "title": "La Complicidad",
+      "duration": "6:03",
+      "type_": "track"
+    },
+    {
+      "position": "3",
+      "title": "Amante Luz",
+      "duration": "5:10",
+      "type_": "track"
+    },
+    {
+      "position": "4",
+      "title": "Para Estar",
+      "duration": "4:55",
+      "type_": "track"
+    },
+    {
+      "position": "5",
+      "title": "En la Oscuridad",
+      "duration": "4:32",
+      "type_": "track"
+    },
+    {
+      "position": "6",
+      "title": "Baja la Tensión",
+      "duration": "4:26",
+      "type_": "track"
+    },
+    {
+      "position": "7",
+      "title": "Ilegal",
+      "duration": "5:04",
+      "type_": "track"
+    },
+    {
+      "position": "8",
+      "title": "Somos Muchos",
+      "duration": "4:43",
+      "type_": "track"
+    },
+    {
+      "position": "9",
+      "title": "Del Tope al Fondo",
+      "duration": "5:05",
+      "type_": "track"
+    },
+    {
+      "position": "10",
+      "title": "Me Faltabas Tú",
+      "duration": "2:52",
+      "type_": "track"
+    },
+    {
+      "position": "11",
+      "title": "Verso Terso",
+      "duration": "6:04",
+      "type_": "track"
+    },
+    {
+      "position": "12",
+      "title": "La Espera",
+      "duration": "4:25",
+      "type_": "track"
+    }
+  ],
+  "notes": "Reggue En Español"
+}
