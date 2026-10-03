@@ -10,6 +10,8 @@
 
 **Spec:** `docs/superpowers/specs/2026-10-02-cd-catalog-duo-design.md`
 
+**Diseño visual:** `docs/design/stitch/` (Google Stitch, sistema "Archival Modernist").
+
 ## Reglas que aplican a todas las tareas
 
 - Siempre `fvm flutter …` / `fvm dart …`. Nunca los binarios globales.
@@ -18,7 +20,7 @@
 - Las tareas marcadas **[usuario]** necesitan al desarrollador: lanzar `fvm flutter run` en su terminal o cambiar la pose en DeviceHub. No se puede automatizar.
 - El simulador se muestra con `open /Applications/Xcode-beta.app/Contents/Applications/DeviceHub.app`. No cerrar ninguna ventana del simulador con la app viva.
 - Raíz del proyecto para las tools MCP: `file:///Users/giftpoint/Documents/projects/iphone-duo-flutter-demo`.
-- Todos los commits terminan con el trailer `Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>`.
+- Todos los commits terminan con el trailer `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`.
 - Formato de cada archivo de `evidence/`: cabecera con herramienta usada, dispositivo + pose, fecha; luego el contenido resumido y observaciones.
 
 ## Mapa de archivos
@@ -31,9 +33,11 @@
 | `lib/data/album_repository.dart` | Carga los JSON desde assets | 3 |
 | `lib/data/album_palettes.dart` | Paleta de portada por release | 3 |
 | `lib/state/selection.dart` | Disco seleccionado + favoritos | 4 |
-| `lib/theme/app_theme.dart` | Tema oscuro y estilo de títulos | 5 |
-| `lib/widgets/generated_cover.dart` | Portada por `CustomPaint` | 5 |
-| `lib/widgets/favorites_badge.dart` | Contador ❤️ N | 5 |
+| `lib/theme/app_theme.dart` | Tokens "Archival Modernist", tema y estilos de texto | 5, 5B |
+| `assets/fonts/` | Bodoni Moda y Plus Jakarta Sans (OFL) | 5B |
+| `lib/widgets/generated_cover.dart` | Portada Bauhaus por `CustomPaint` | 5, 5B |
+| `lib/widgets/favorites_badge.dart` | Contador ❤️ N en pastilla | 5, 5B |
+| `lib/widgets/vault_title.dart`, `album_title.dart`, `archive_chip.dart`, `favorite_button.dart` | Encabezado, título serif, pastillas, botón de favorito | 5B |
 | `lib/screens/catalog_loader.dart` | Carga, error, dueño de `Selection` | 5 |
 | `lib/screens/catalog_screen.dart` | Baseline (5) → carrusel (7) → responsivo (9) → pliegue (11) | 5, 7, 9, 11 |
 | `lib/widgets/album_detail_pane.dart` | Pestañas Tracks / Créditos / Ficha / Notas | 6 |
@@ -1074,6 +1078,578 @@ MCP `widget_inspector` `get_widget_tree` `summaryOnly: true`.
 Expected: `CatalogLoader → CatalogScreen → Scaffold → ListView` con 5 `ListTile`.
 MCP `get_runtime_errors` → Expected: sin errores.
 
+### Task 5B: Sistema visual "Archival Modernist"
+
+Referencia: `docs/design/stitch/` (pantallas + `DESIGN.md`).
+
+**Files:**
+- Create: `assets/fonts/BodoniModa.ttf`, `assets/fonts/BodoniModa-Italic.ttf`, `assets/fonts/PlusJakartaSans.ttf`, `assets/fonts/OFL-BodoniModa.txt`, `assets/fonts/OFL-PlusJakartaSans.txt`
+- Modify: `pubspec.yaml` (sección `flutter:`)
+- Modify: `lib/theme/app_theme.dart`, `lib/data/album_palettes.dart`, `lib/widgets/generated_cover.dart`, `lib/widgets/favorites_badge.dart` (reemplazo completo)
+- Create: `lib/widgets/vault_title.dart`, `lib/widgets/album_title.dart`, `lib/widgets/archive_chip.dart`, `lib/widgets/favorite_button.dart`
+- Modify: `lib/screens/catalog_screen.dart` (AppBar)
+
+- [ ] **Step 1: Descargar las fuentes (OFL)**
+
+```bash
+mkdir -p assets/fonts
+B=https://raw.githubusercontent.com/google/fonts/main/ofl
+curl -fsSL -o assets/fonts/BodoniModa.ttf "$B/bodonimoda/BodoniModa%5Bopsz,wght%5D.ttf"
+curl -fsSL -o assets/fonts/BodoniModa-Italic.ttf "$B/bodonimoda/BodoniModa-Italic%5Bopsz,wght%5D.ttf"
+curl -fsSL -o assets/fonts/PlusJakartaSans.ttf "$B/plusjakartasans/PlusJakartaSans%5Bwght%5D.ttf"
+curl -fsSL -o assets/fonts/OFL-BodoniModa.txt "$B/bodonimoda/OFL.txt"
+curl -fsSL -o assets/fonts/OFL-PlusJakartaSans.txt "$B/plusjakartasans/OFL.txt"
+file assets/fonts/*.ttf
+```
+
+Expected: tres líneas `TrueType Font data`.
+
+- [ ] **Step 2: Declarar las fuentes**
+
+En `pubspec.yaml`, dentro de `flutter:` y después del bloque `assets:`, añadir:
+
+```yaml
+  fonts:
+    - family: Bodoni Moda
+      fonts:
+        - asset: assets/fonts/BodoniModa.ttf
+        - asset: assets/fonts/BodoniModa-Italic.ttf
+          style: italic
+    - family: Plus Jakarta Sans
+      fonts:
+        - asset: assets/fonts/PlusJakartaSans.ttf
+```
+
+Run: `fvm flutter pub get` → Expected: `Got dependencies!`
+
+- [ ] **Step 3: Tema**
+
+`lib/theme/app_theme.dart` (reemplazo completo):
+
+```dart
+import 'package:flutter/material.dart';
+
+/// Tokens del sistema "Archival Modernist" (docs/design/stitch/DESIGN.md).
+abstract final class Vault {
+  static const canvas = Color(0xFF1C1A19);
+  static const surface1 = Color(0xFF252220);
+  static const surface2 = Color(0xFF2E2A28);
+  static const hairline = Color(0xFF3A3533);
+  static const mint = Color(0xFF2EC4B6);
+  static const ochre = Color(0xFFFFD166);
+  static const vermilion = Color(0xFFE76F51);
+  static const deepTeal = Color(0xFF0E3B43);
+  static const sage = Color(0xFF8AB17D);
+  static const alabaster = Color(0xFFF4F1EA);
+  static const stone = Color(0xFFA8A29E);
+  static const granite = Color(0xFF6E6763);
+}
+
+const String kSerifFamily = 'Bodoni Moda';
+const String kSansFamily = 'Plus Jakarta Sans';
+
+ThemeData buildAppTheme() {
+  final base = ThemeData(
+    useMaterial3: true,
+    brightness: Brightness.dark,
+    fontFamily: kSansFamily,
+    scaffoldBackgroundColor: Vault.canvas,
+    dividerColor: Vault.hairline,
+    colorScheme: const ColorScheme.dark(
+      surface: Vault.canvas,
+      surfaceContainerLow: Vault.surface1,
+      surfaceContainerHighest: Vault.surface2,
+      primary: Vault.mint,
+      onPrimary: Vault.canvas,
+      secondary: Vault.ochre,
+      tertiary: Vault.vermilion,
+      onSurface: Vault.alabaster,
+      onSurfaceVariant: Vault.stone,
+      outline: Vault.hairline,
+      outlineVariant: Vault.hairline,
+    ),
+  );
+  return base.copyWith(
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Vault.canvas,
+      surfaceTintColor: Colors.transparent,
+      scrolledUnderElevation: 0,
+      shape: Border(bottom: BorderSide(color: Vault.hairline)),
+    ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      backgroundColor: Vault.surface2,
+      surfaceTintColor: Colors.transparent,
+    ),
+    textTheme: base.textTheme.apply(
+      bodyColor: Vault.alabaster,
+      displayColor: Vault.alabaster,
+    ),
+  );
+}
+
+/// Título de disco en Bodoni Moda. Las fuentes son variables: el grosor se
+/// fija con [FontVariation].
+TextStyle serifTitle(
+  double fontSize, {
+  bool italic = false,
+  Color color = Vault.alabaster,
+}) {
+  return TextStyle(
+    fontFamily: kSerifFamily,
+    fontSize: fontSize,
+    height: 1.1,
+    letterSpacing: -0.01 * fontSize,
+    fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    fontVariations: const [FontVariation('wght', 400)],
+    color: color,
+  );
+}
+
+/// Etiqueta de registro: se escribe en mayúsculas y lleva tracking amplio.
+TextStyle ledgerLabel({double fontSize = 12, Color color = Vault.stone}) {
+  return TextStyle(
+    fontFamily: kSansFamily,
+    fontSize: fontSize,
+    height: 1.35,
+    letterSpacing: fontSize * 0.1,
+    fontWeight: FontWeight.w600,
+    fontVariations: const [FontVariation('wght', 600)],
+    color: color,
+  );
+}
+```
+
+- [ ] **Step 4: Paletas por disco**
+
+`lib/data/album_palettes.dart` (reemplazo completo; se mantienen la clase y `paletteFor`):
+
+```dart
+import 'package:flutter/material.dart';
+
+/// Colores de la portada generada de un disco, tomados de la paleta
+/// "Archival Modernist". No imitan la portada original.
+class AlbumPalette {
+  const AlbumPalette({
+    required this.background,
+    required this.primary,
+    required this.accent,
+  });
+
+  final Color background;
+  final Color primary;
+  final Color accent;
+}
+
+const Map<int, AlbumPalette> kAlbumPalettes = {
+  // Gorillaz — Gorillaz
+  4214311: AlbumPalette(
+    background: Color(0xFF1F2B22),
+    primary: Color(0xFF8AB17D),
+    accent: Color(0xFFE76F51),
+  ),
+  // Daft Punk — Random Access Memories (la de la referencia de Stitch)
+  13115020: AlbumPalette(
+    background: Color(0xFF0E3B43),
+    primary: Color(0xFF2EC4B6),
+    accent: Color(0xFFFFD166),
+  ),
+  // Sal y Mileto — Disko 0
+  9100081: AlbumPalette(
+    background: Color(0xFF3A1F18),
+    primary: Color(0xFFE76F51),
+    accent: Color(0xFFFFD166),
+  ),
+  // Gondwana — Alabanza
+  11066248: AlbumPalette(
+    background: Color(0xFF14261F),
+    primary: Color(0xFF2EC4B6),
+    accent: Color(0xFFE76F51),
+  ),
+  // Cultura Profética — La Dulzura
+  8172924: AlbumPalette(
+    background: Color(0xFF2B2140),
+    primary: Color(0xFFFFD166),
+    accent: Color(0xFF2EC4B6),
+  ),
+};
+
+const AlbumPalette kFallbackPalette = AlbumPalette(
+  background: Color(0xFF252220),
+  primary: Color(0xFFA8A29E),
+  accent: Color(0xFFF4F1EA),
+);
+
+AlbumPalette paletteFor(int releaseId) =>
+    kAlbumPalettes[releaseId] ?? kFallbackPalette;
+```
+
+- [ ] **Step 5: Portada Bauhaus**
+
+`lib/widgets/generated_cover.dart` (reemplazo completo; misma API):
+
+```dart
+import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+
+import '../data/album_palettes.dart';
+import '../models/album.dart';
+
+/// Portada abstracta dibujada por código en el estilo de las referencias de
+/// Stitch: retícula fina, anillos concéntricos, dos barras diagonales y un medio
+/// círculo. La composición sale del id del release, así que es estable.
+class GeneratedCover extends StatelessWidget {
+  const GeneratedCover({super.key, required this.album});
+
+  final Album album;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRect(
+      child: CustomPaint(
+        size: Size.infinite,
+        painter: _CoverPainter(paletteFor(album.id), album.id),
+      ),
+    );
+  }
+}
+
+class _CoverPainter extends CustomPainter {
+  _CoverPainter(this.palette, this.seed);
+
+  final AlbumPalette palette;
+  final int seed;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+    final s = size.shortestSide;
+    final random = math.Random(seed);
+
+    canvas.drawRect(Offset.zero & size, Paint()..color = palette.background);
+
+    final grid = Paint()
+      ..color = palette.primary.withValues(alpha: 0.10)
+      ..strokeWidth = 1;
+    for (var i = 1; i < 6; i++) {
+      canvas.drawLine(Offset(w * i / 6, 0), Offset(w * i / 6, h), grid);
+    }
+
+    final center = Offset(
+      w * (0.35 + random.nextDouble() * 0.3),
+      h * (0.3 + random.nextDouble() * 0.15),
+    );
+    for (var i = 4; i >= 1; i--) {
+      canvas.drawCircle(
+        center,
+        s * 0.09 * i,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = s * 0.014
+          ..color = i.isEven ? palette.primary : palette.accent,
+      );
+    }
+    canvas
+      ..drawCircle(center, s * 0.05, Paint()..color = palette.accent)
+      ..drawCircle(center, s * 0.02, Paint()..color = const Color(0xFF111111));
+
+    canvas
+      ..save()
+      ..translate(center.dx, center.dy + s * 0.12)
+      ..rotate(-math.pi / 3 + random.nextDouble() * 0.5)
+      ..drawRect(
+        Rect.fromCenter(
+          center: Offset(0, -s * 0.06),
+          width: s * 1.8,
+          height: s * 0.1,
+        ),
+        Paint()..color = palette.accent,
+      )
+      ..drawRect(
+        Rect.fromCenter(
+          center: Offset(0, s * 0.07),
+          width: s * 1.8,
+          height: s * 0.07,
+        ),
+        Paint()..color = palette.primary,
+      )
+      ..restore();
+
+    final base = Offset(w * (0.3 + random.nextDouble() * 0.3), h * 0.84);
+    canvas
+      ..drawArc(
+        Rect.fromCircle(center: base, radius: s * 0.12),
+        0,
+        math.pi,
+        true,
+        Paint()..color = palette.primary,
+      )
+      ..drawLine(
+        Offset(base.dx - s * 0.15, base.dy),
+        Offset(base.dx + s * 0.35, base.dy),
+        Paint()
+          ..color = palette.accent
+          ..strokeWidth = s * 0.008,
+      );
+  }
+
+  @override
+  bool shouldRepaint(_CoverPainter oldDelegate) =>
+      oldDelegate.palette != palette || oldDelegate.seed != seed;
+}
+```
+
+- [ ] **Step 6: Piezas compartidas**
+
+`lib/widgets/vault_title.dart`:
+
+```dart
+import 'package:flutter/material.dart';
+
+import '../theme/app_theme.dart';
+
+/// Encabezado de la app: "• ARCHIVE / DISCOTHEQUE" sobre "Curated Vault".
+class VaultTitle extends StatelessWidget {
+  const VaultTitle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const DecoratedBox(
+              decoration: BoxDecoration(
+                color: Vault.mint,
+                shape: BoxShape.circle,
+              ),
+              child: SizedBox.square(dimension: 6),
+            ),
+            const SizedBox(width: 6),
+            Text(
+              'ARCHIVE / DISCOTHEQUE',
+              style: ledgerLabel(fontSize: 10, color: Vault.ochre),
+            ),
+          ],
+        ),
+        const SizedBox(height: 2),
+        Text('Curated Vault', style: serifTitle(24, italic: true)),
+      ],
+    );
+  }
+}
+```
+
+`lib/widgets/album_title.dart`:
+
+```dart
+import 'package:flutter/material.dart';
+
+import '../theme/app_theme.dart';
+
+/// Título de disco en Bodoni Moda con la última palabra en cursiva menta.
+class AlbumTitle extends StatelessWidget {
+  const AlbumTitle({
+    super.key,
+    required this.title,
+    required this.fontSize,
+    this.textAlign = TextAlign.start,
+  });
+
+  final String title;
+  final double fontSize;
+  final TextAlign textAlign;
+
+  @override
+  Widget build(BuildContext context) {
+    final split = title.lastIndexOf(' ');
+    return Text.rich(
+      TextSpan(
+        style: serifTitle(fontSize),
+        children: [
+          if (split <= 0)
+            TextSpan(text: title)
+          else ...[
+            TextSpan(text: title.substring(0, split)),
+            TextSpan(
+              text: title.substring(split),
+              style: serifTitle(fontSize, italic: true, color: Vault.mint),
+            ),
+          ],
+        ],
+      ),
+      textAlign: textAlign,
+    );
+  }
+}
+```
+
+`lib/widgets/archive_chip.dart`:
+
+```dart
+import 'package:flutter/material.dart';
+
+import '../models/album.dart';
+import '../theme/app_theme.dart';
+
+/// Pastilla con borde fino para datos de catálogo.
+class ArchiveChip extends StatelessWidget {
+  const ArchiveChip(this.label, {super.key});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        border: Border.all(color: Vault.hairline),
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+        child: Text(
+          label.toUpperCase(),
+          style: ledgerLabel(fontSize: 11, color: Vault.alabaster),
+        ),
+      ),
+    );
+  }
+}
+
+/// Pastillas de formato y número de catálogo de un disco.
+List<Widget> archiveChipsFor(Album album) {
+  return [
+    if (album.formats.isNotEmpty)
+      ArchiveChip(
+        album.formats.first
+            .replaceAll(' (', ' · ')
+            .replaceAll(', ', ' · ')
+            .replaceAll(')', ''),
+      ),
+    if (album.catalogNumber case final catalog?) ArchiveChip('Cat. $catalog'),
+  ];
+}
+```
+
+`lib/widgets/favorite_button.dart`:
+
+```dart
+import 'package:flutter/material.dart';
+
+import '../theme/app_theme.dart';
+
+/// Botón de favorito del disco actual.
+class FavoriteButton extends StatelessWidget {
+  const FavoriteButton({
+    super.key,
+    required this.isFavorite,
+    required this.onPressed,
+  });
+
+  final bool isFavorite;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton.outlined(
+      tooltip: isFavorite ? 'Quitar de favoritos' : 'Marcar como favorito',
+      onPressed: onPressed,
+      style: IconButton.styleFrom(
+        foregroundColor: Vault.mint,
+        side: const BorderSide(color: Vault.hairline),
+      ),
+      icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
+    );
+  }
+}
+```
+
+`lib/widgets/favorites_badge.dart` (reemplazo completo; misma API y misma `Key`):
+
+```dart
+import 'package:flutter/material.dart';
+
+import '../theme/app_theme.dart';
+
+/// Marcador de estado: si este número sobrevive a un cambio de pose o a un
+/// hot reload, la app no se reinició.
+class FavoritesBadge extends StatelessWidget {
+  const FavoritesBadge({super.key, required this.count});
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 16),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          border: Border.all(color: Vault.hairline),
+          borderRadius: BorderRadius.circular(999),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.favorite, size: 16, color: Vault.mint),
+              const SizedBox(width: 6),
+              Text(
+                '$count',
+                key: const Key('favorites-count'),
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+- [ ] **Step 7: Encabezado en la pantalla baseline**
+
+En `lib/screens/catalog_screen.dart`, añadir `import '../widgets/vault_title.dart';` y reemplazar el `AppBar` por:
+
+```dart
+          appBar: AppBar(
+            toolbarHeight: 72,
+            titleSpacing: 20,
+            title: const VaultTitle(),
+            actions: [FavoritesBadge(count: selection.favoritesCount)],
+          ),
+```
+
+- [ ] **Step 8: Analizar**
+
+MCP `analyze_files` → Expected: `No errors`.
+MCP `run_tests` con `paths: ["test"]` → Expected: 18 tests PASS (14 + 4).
+
+- [ ] **Step 9: ⏸ [usuario] Relanzar la app**
+
+Las fuentes nuevas no entran con hot reload. El desarrollador detiene `flutter run` (`q`) y lo relanza con el Duo cerrado y en vertical:
+
+```bash
+fvm flutter run -d 8A082039-2934-44E1-B92C-CDCE41CBC5C1
+```
+
+- [ ] **Step 10: Confirmar por MCP**
+
+MCP `dtd` `listDtdUris` → `connect`. MCP `get_runtime_errors` → Expected: sin errores. MCP `widget_inspector` `get_widget_tree` `summaryOnly: true` → Expected: `AppBar` con `VaultTitle` y `FavoritesBadge`; 5 `ListTile` con `GeneratedCover`. El desarrollador confirma en el simulador que se ven Bodoni Moda (*Curated Vault*) y las portadas nuevas.
+
+- [ ] **Step 11: Commit**
+
+```bash
+git add assets/fonts pubspec.yaml lib
+git commit -m "feat: sistema visual Archival Modernist (Stitch): tema, fuentes y portadas"
+```
+
 ---
 
 ## Parte B — Componentes, con Agentic Hot Reload (app viva)
@@ -1081,6 +1657,8 @@ MCP `get_runtime_errors` → Expected: sin errores.
 Cada tarea de esta parte termina con `hot_reload` por MCP y una lectura de `get_runtime_errors`. La terminal de `flutter run` no imprime nada cuando el reload entra por DTD: la verificación es el simulador y el árbol de widgets.
 
 ### Task 6: Panel de detalle
+
+Referencia: panel derecho de `docs/design/stitch/open-portrait.png`.
 
 **Files:**
 - Create: `lib/widgets/album_detail_pane.dart`
@@ -1093,8 +1671,10 @@ Cada tarea de esta parte termina con `hot_reload` por MCP y una lectura de `get_
 import 'package:flutter/material.dart';
 
 import '../models/album.dart';
+import '../theme/app_theme.dart';
 
-/// Ficha de un disco en pestañas: tracks, créditos, ficha técnica y notas.
+/// Ficha de un disco: pestañas segmentadas (Tracks, Créditos, Ficha, Notas)
+/// con filas de registro y la atribución de Discogs al pie.
 class AlbumDetailPane extends StatelessWidget {
   const AlbumDetailPane({super.key, required this.album});
 
@@ -1102,46 +1682,80 @@ class AlbumDetailPane extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: DefaultTabController(
-        length: 4,
-        child: Column(
-          children: [
-            const TabBar(
-              isScrollable: true,
-              tabAlignment: TabAlignment.start,
-              tabs: [
-                Tab(text: 'Tracks'),
-                Tab(text: 'Créditos'),
-                Tab(text: 'Ficha'),
-                Tab(text: 'Notas'),
+    return DefaultTabController(
+      length: 4,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: Vault.surface1,
+                border: Border.all(color: Vault.hairline),
+                borderRadius: BorderRadius.circular(999),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(4),
+                child: TabBar(
+                  indicator: BoxDecoration(
+                    color: Vault.mint,
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  dividerColor: Colors.transparent,
+                  labelColor: Vault.canvas,
+                  unselectedLabelColor: Vault.stone,
+                  labelStyle: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  labelPadding: EdgeInsets.zero,
+                  splashBorderRadius: BorderRadius.circular(999),
+                  tabs: [
+                    Tab(height: 36, text: 'Tracks ${album.tracks.length}'),
+                    const Tab(height: 36, text: 'Créditos'),
+                    const Tab(height: 36, text: 'Ficha'),
+                    const Tab(height: 36, text: 'Notas'),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: TabBarView(
+              children: [
+                _TracksTab(album: album),
+                _CreditsTab(album: album),
+                _SpecsTab(album: album),
+                _NotesTab(album: album),
               ],
             ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  _TracksTab(album: album),
-                  _CreditsTab(album: album),
-                  _SpecsTab(album: album),
-                  _NotesTab(album: album),
-                ],
+          ),
+          DecoratedBox(
+            decoration: const BoxDecoration(
+              border: Border(top: BorderSide(color: Vault.hairline)),
+            ),
+            child: SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    'DATOS DE DISCOGS (CC0)',
+                    style: ledgerLabel(fontSize: 10, color: Vault.granite),
+                  ),
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Text(
-                'Datos de Discogs (CC0)',
-                style: Theme.of(context).textTheme.labelSmall,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
 
-const EdgeInsets _tabPadding = EdgeInsets.all(16);
+const EdgeInsets _tabPadding = EdgeInsets.symmetric(horizontal: 16);
 
 class _TracksTab extends StatelessWidget {
   const _TracksTab({required this.album});
@@ -1150,13 +1764,12 @@ class _TracksTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
+    return ListView.builder(
       padding: _tabPadding,
       itemCount: album.tracks.length,
-      separatorBuilder: (context, index) => const SizedBox(height: 8),
       itemBuilder: (context, index) {
         final track = album.tracks[index];
-        return _InfoCard(
+        return _LedgerRow(
           leading: track.position,
           title: track.title,
           trailing: track.duration,
@@ -1174,15 +1787,14 @@ class _CreditsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (album.credits.isEmpty) {
-      return const Center(child: Text('Sin créditos en Discogs'));
+      return const _EmptyTab('Sin créditos en Discogs');
     }
-    return ListView.separated(
+    return ListView.builder(
       padding: _tabPadding,
       itemCount: album.credits.length,
-      separatorBuilder: (context, index) => const SizedBox(height: 8),
       itemBuilder: (context, index) {
         final credit = album.credits[index];
-        return _InfoCard(title: credit.name, subtitle: credit.role);
+        return _LedgerRow(title: credit.name, underline: credit.role);
       },
     );
   }
@@ -1204,13 +1816,12 @@ class _SpecsTab extends StatelessWidget {
       if (album.genres.isNotEmpty) ('Géneros', album.genres.join(', ')),
       if (album.styles.isNotEmpty) ('Estilos', album.styles.join(', ')),
     ];
-    return ListView.separated(
+    return ListView.builder(
       padding: _tabPadding,
       itemCount: rows.length,
-      separatorBuilder: (context, index) => const SizedBox(height: 8),
       itemBuilder: (context, index) {
         final (label, value) = rows[index];
-        return _InfoCard(title: value, subtitle: label);
+        return _LedgerRow(overline: label, title: value);
       },
     );
   }
@@ -1225,56 +1836,98 @@ class _NotesTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final notes = album.notes;
     if (notes == null) {
-      return const Center(child: Text('Sin notas en Discogs'));
+      return const _EmptyTab('Sin notas en Discogs');
     }
-    return SingleChildScrollView(padding: _tabPadding, child: Text(notes));
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Text(
+        notes,
+        style: const TextStyle(color: Vault.stone, fontSize: 14, height: 1.6),
+      ),
+    );
   }
 }
 
-class _InfoCard extends StatelessWidget {
-  const _InfoCard({
+class _EmptyTab extends StatelessWidget {
+  const _EmptyTab(this.message);
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(message, style: const TextStyle(color: Vault.stone)),
+    );
+  }
+}
+
+/// Fila de libro de registro: línea fina inferior, posición en granito y
+/// duración en piedra.
+class _LedgerRow extends StatelessWidget {
+  const _LedgerRow({
     required this.title,
     this.leading,
-    this.subtitle,
+    this.overline,
+    this.underline,
     this.trailing,
   });
 
   final String title;
   final String? leading;
-  final String? subtitle;
+  final String? overline;
+  final String? underline;
   final String? trailing;
+
+  static const _figures = [FontFeature.tabularFigures()];
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return DecoratedBox(
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(8),
+      decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(color: Vault.hairline)),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.symmetric(vertical: 14),
         child: Row(
           children: [
             if (leading case final leading?)
               SizedBox(
-                width: 36,
-                child: Text(leading, style: theme.textTheme.titleMedium),
+                width: 32,
+                child: Text(
+                  leading,
+                  style: const TextStyle(
+                    color: Vault.granite,
+                    fontSize: 13,
+                    fontFeatures: _figures,
+                  ),
+                ),
               ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: theme.textTheme.bodyLarge),
-                  if (subtitle case final subtitle?)
-                    Text(subtitle, style: theme.textTheme.bodySmall),
+                  if (overline case final overline?)
+                    Text(overline.toUpperCase(), style: ledgerLabel(fontSize: 10)),
+                  Text(title, style: const TextStyle(fontSize: 15)),
+                  if (underline case final underline?)
+                    Text(
+                      underline.toUpperCase(),
+                      style: ledgerLabel(fontSize: 10),
+                    ),
                 ],
               ),
             ),
             if (trailing case final trailing?)
               Padding(
                 padding: const EdgeInsets.only(left: 12),
-                child: Text(trailing, style: theme.textTheme.bodySmall),
+                child: Text(
+                  trailing,
+                  style: const TextStyle(
+                    color: Vault.stone,
+                    fontSize: 13,
+                    fontFeatures: _figures,
+                  ),
+                ),
               ),
           ],
         ),
@@ -1292,10 +1945,12 @@ MCP `analyze_files` → Expected: `No errors`.
 
 ```bash
 git add lib/widgets/album_detail_pane.dart
-git commit -m "feat: panel de detalle con pestañas de tracks, créditos, ficha y notas"
+git commit -m "feat: panel de detalle con pestañas segmentadas y filas de registro"
 ```
 
 ### Task 7: Carrusel de portadas + primera prueba de hot reload
+
+Referencia: `docs/design/stitch/closed-carousel.png` y `closed-details-sheet.png`.
 
 **Files:**
 - Create: `lib/widgets/cover_carousel.dart`
@@ -1313,9 +1968,13 @@ import '../models/album.dart';
 import '../state/selection.dart';
 import '../theme/app_theme.dart';
 import 'album_detail_pane.dart';
+import 'album_title.dart';
+import 'archive_chip.dart';
+import 'favorite_button.dart';
 import 'generated_cover.dart';
 
-/// Modo compacto: una portada a pantalla completa por disco.
+/// Modo compacto: una portada enmarcada por disco, con los controles fijos
+/// debajo del carrusel.
 class CoverCarousel extends StatefulWidget {
   const CoverCarousel({
     super.key,
@@ -1349,28 +2008,36 @@ class _CoverCarouselState extends State<CoverCarousel> {
       isScrollControlled: true,
       showDragHandle: true,
       builder: (context) => FractionallySizedBox(
-        heightFactor: 0.75,
-        child: AlbumDetailPane(album: album),
+        heightFactor: 0.8,
+        child: Column(
+          children: [
+            _SheetHeader(album: album),
+            Expanded(child: AlbumDetailPane(album: album)),
+          ],
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
+    final album = widget.albums[widget.selection.index];
+    return Column(
       children: [
-        PageView.builder(
-          controller: _controller,
-          itemCount: widget.albums.length,
-          onPageChanged: widget.selection.select,
-          itemBuilder: (context, index) {
-            return _CoverPage(album: widget.albums[index]);
-          },
+        Expanded(
+          child: PageView.builder(
+            controller: _controller,
+            itemCount: widget.albums.length,
+            onPageChanged: widget.selection.select,
+            itemBuilder: (context, index) {
+              return _CoverPage(album: widget.albums[index]);
+            },
+          ),
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: SafeArea(
+        SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -1378,12 +2045,38 @@ class _CoverCarouselState extends State<CoverCarousel> {
                   count: widget.albums.length,
                   index: widget.selection.index,
                 ),
-                IconButton(
-                  key: const Key('open-details'),
-                  tooltip: 'Ver ficha',
-                  color: Colors.white,
-                  icon: const Icon(Icons.keyboard_arrow_down),
-                  onPressed: _openDetails,
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    FavoriteButton(
+                      key: const Key('favorite-toggle'),
+                      isFavorite: widget.selection.isFavorite(album.id),
+                      onPressed: () =>
+                          widget.selection.toggleFavorite(album.id),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: FilledButton.icon(
+                        key: const Key('open-details'),
+                        onPressed: _openDetails,
+                        style: FilledButton.styleFrom(
+                          backgroundColor: Vault.surface2,
+                          foregroundColor: Vault.alabaster,
+                          minimumSize: const Size.fromHeight(48),
+                          shape: const StadiumBorder(),
+                        ),
+                        iconAlignment: IconAlignment.end,
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Vault.mint,
+                        ),
+                        label: Text(
+                          'VER FICHA Y TRACKS',
+                          style: ledgerLabel(color: Vault.alabaster),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -1401,46 +2094,104 @@ class _CoverPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        GeneratedCover(album: album),
-        const DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.center,
-              end: Alignment.bottomCenter,
-              colors: [Colors.transparent, Colors.black54],
+    final details = [
+      if (album.year != null) '${album.year}',
+      ?album.country,
+    ].join(' · ');
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+      child: Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: 0.85,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Vault.hairline),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(1),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(3),
+                      child: GeneratedCover(album: album),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-        Align(
-          alignment: const Alignment(0, 0.55),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+          const SizedBox(height: 20),
+          Text(
+            album.artist.toUpperCase(),
+            textAlign: TextAlign.center,
+            style: ledgerLabel(color: Vault.ochre),
+          ),
+          const SizedBox(height: 6),
+          AlbumTitle(
+            title: album.title,
+            fontSize: 34,
+            textAlign: TextAlign.center,
+          ),
+          if (details.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(
+              details,
+              style: const TextStyle(color: Vault.stone, fontSize: 15),
+            ),
+          ],
+          const SizedBox(height: 12),
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 8,
+            runSpacing: 8,
+            children: archiveChipsFor(album),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SheetHeader extends StatelessWidget {
+  const _SheetHeader({required this.album});
+
+  final Album album;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 4),
+      child: Row(
+        children: [
+          SizedBox.square(
+            dimension: 48,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: GeneratedCover(album: album),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  album.title,
-                  textAlign: TextAlign.center,
-                  style: displayTitleStyle(44),
+                  album.artist.toUpperCase(),
+                  style: ledgerLabel(fontSize: 10, color: Vault.ochre),
                 ),
-                const SizedBox(height: 8),
                 Text(
-                  [album.artist, if (album.year != null) '${album.year}']
-                      .join(' · '),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(color: Colors.white70),
+                  album.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: serifTitle(20),
                 ),
               ],
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -1460,10 +2211,10 @@ class _PageDots extends StatelessWidget {
           AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             margin: const EdgeInsets.symmetric(horizontal: 3),
-            width: i == index ? 18 : 6,
+            width: i == index ? 24 : 6,
             height: 6,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: i == index ? Vault.mint : Vault.granite,
               borderRadius: BorderRadius.circular(3),
             ),
           ),
@@ -1484,6 +2235,7 @@ import '../models/album.dart';
 import '../state/selection.dart';
 import '../widgets/cover_carousel.dart';
 import '../widgets/favorites_badge.dart';
+import '../widgets/vault_title.dart';
 
 class CatalogScreen extends StatelessWidget {
   const CatalogScreen({
@@ -1500,25 +2252,12 @@ class CatalogScreen extends StatelessWidget {
     return ListenableBuilder(
       listenable: selection,
       builder: (context, _) {
-        final album = albums[selection.index];
         return Scaffold(
-          extendBodyBehindAppBar: true,
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            title: const Text('CD Catalog'),
-            actions: [
-              IconButton(
-                key: const Key('favorite-toggle'),
-                tooltip: 'Favorito',
-                icon: Icon(
-                  selection.isFavorite(album.id)
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                ),
-                onPressed: () => selection.toggleFavorite(album.id),
-              ),
-              FavoritesBadge(count: selection.favoritesCount),
-            ],
+            toolbarHeight: 72,
+            titleSpacing: 20,
+            title: const VaultTitle(),
+            actions: [FavoritesBadge(count: selection.favoritesCount)],
           ),
           body: CoverCarousel(albums: albums, selection: selection),
         );
@@ -1537,27 +2276,29 @@ MCP `widget_inspector` `get_widget_tree` `summaryOnly: true` → Expected: `Cata
 
 - [ ] **Step 4: ⏸ [usuario] Poner estado visible**
 
-El desarrollador desliza hasta el **tercer disco** (*Disko 0*) y marca **2 favoritos** (el contador muestra `2`).
+El desarrollador desliza hasta el **tercer disco** (*Disko 0*) y deja el contador de favoritos en **2**.
 
 - [ ] **Step 5: Prueba de estado con hot reload**
 
-En `lib/screens/catalog_screen.dart`, cambiar `const Text('CD Catalog')` por `const Text('Discos')`.
+En `lib/widgets/vault_title.dart`, cambiar `'Curated Vault'` por `'Curated Discs'`.
 MCP `hot_reload`.
 MCP `widget_inspector` `get_widget_tree` `summaryOnly: true`.
-Expected: el `Text` del AppBar dice `Discos`, el `Text` con key `favorites-count` dice `2` y el título visible sigue siendo `Disko 0`. El desarrollador lo confirma en el simulador.
+Expected: el encabezado dice `Curated Discs`, el `Text` con key `favorites-count` dice `2` y el disco visible sigue siendo *Disko 0*. El desarrollador lo confirma en el simulador. Después, volver a `'Curated Vault'` y otro `hot_reload`.
 
 - [ ] **Step 6: Guardar la evidencia**
 
-Crear `evidence/widget-tree-closed.txt` con la cabecera (herramienta `widget_inspector get_widget_tree summaryOnly`, iPhone Duo cerrado en vertical, fecha), el árbol resumido hasta `PageView` y la observación de la prueba de estado (título cambiado, contador y disco intactos).
+Crear `evidence/widget-tree-closed.txt` con la cabecera (herramienta `widget_inspector get_widget_tree summaryOnly`, iPhone Duo cerrado en vertical, fecha), el árbol resumido hasta `PageView` y la observación de la prueba de estado (encabezado cambiado, contador y disco intactos).
 
 - [ ] **Step 7: Commit**
 
 ```bash
 git add lib/widgets/cover_carousel.dart lib/screens/catalog_screen.dart evidence/widget-tree-closed.txt
-git commit -m "feat: carrusel de portadas a pantalla completa"
+git commit -m "feat: carrusel de portadas con ficha deslizable"
 ```
 
 ### Task 8: Panel del disco y riel
+
+Referencia: panel izquierdo de `docs/design/stitch/open-portrait.png`.
 
 **Files:**
 - Create: `lib/widgets/album_hero_pane.dart`
@@ -1574,14 +2315,24 @@ import 'package:flutter/material.dart';
 
 import '../models/album.dart';
 import '../theme/app_theme.dart';
+import 'album_title.dart';
+import 'archive_chip.dart';
+import 'favorite_button.dart';
 import 'generated_cover.dart';
 
 /// Panel izquierdo del modo de dos paneles: portada en arco con un CD
-/// asomando por detrás, título y datos básicos.
+/// asomando por detrás y, abajo, los datos del disco.
 class AlbumHeroPane extends StatelessWidget {
-  const AlbumHeroPane({super.key, required this.album});
+  const AlbumHeroPane({
+    super.key,
+    required this.album,
+    required this.isFavorite,
+    required this.onToggleFavorite,
+  });
 
   final Album album;
+  final bool isFavorite;
+  final VoidCallback onToggleFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -1591,53 +2342,67 @@ class AlbumHeroPane extends StatelessWidget {
       ?album.label,
     ].join(' · ');
     return ClipRect(
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Flexible(
+              child: Align(
+                alignment: Alignment.topLeft,
                 child: AspectRatio(
-                  aspectRatio: 0.72,
+                  aspectRatio: 1,
                   child: Stack(
-                    clipBehavior: Clip.none,
-                    fit: StackFit.expand,
                     children: [
-                      const FractionalTranslation(
-                        translation: Offset(0.3, 0.12),
-                        child: _Disc(),
-                      ),
-                      ClipRRect(
-                        borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(999),
+                      const Align(
+                        alignment: Alignment(1, -0.6),
+                        child: FractionallySizedBox(
+                          widthFactor: 0.66,
+                          child: _Disc(),
                         ),
-                        child: GeneratedCover(album: album),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: FractionallySizedBox(
+                          widthFactor: 0.72,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(999),
+                            ),
+                            child: GeneratedCover(album: album),
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
-              Text(
-                album.title,
-                textAlign: TextAlign.center,
-                style: displayTitleStyle(34),
-              ),
+            ),
+            const Spacer(),
+            Text(
+              album.artist.toUpperCase(),
+              style: ledgerLabel(color: Vault.ochre),
+            ),
+            const SizedBox(height: 6),
+            AlbumTitle(title: album.title, fontSize: 36),
+            if (details.isNotEmpty) ...[
               const SizedBox(height: 8),
               Text(
-                album.artist,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleMedium,
+                details,
+                style: const TextStyle(color: Vault.stone, fontSize: 14),
               ),
-              if (details.isNotEmpty)
-                Text(
-                  details,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
             ],
-          ),
+            const SizedBox(height: 16),
+            Wrap(spacing: 8, runSpacing: 8, children: archiveChipsFor(album)),
+            const SizedBox(height: 16),
+            const Divider(height: 1),
+            const SizedBox(height: 12),
+            FavoriteButton(
+              key: const Key('favorite-toggle'),
+              isFavorite: isFavorite,
+              onPressed: onToggleFavorite,
+            ),
+          ],
         ),
       ),
     );
@@ -1649,32 +2414,29 @@ class _Disc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: DecoratedBox(
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: SweepGradient(
-              colors: [
-                Color(0xFFDADADA),
-                Color(0xFF8E8E8E),
-                Color(0xFFF2F2F2),
-                Color(0xFF9A9A9A),
-                Color(0xFFDADADA),
-              ],
-            ),
+    return const AspectRatio(
+      aspectRatio: 1,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          gradient: SweepGradient(
+            colors: [
+              Color(0xFFDADADA),
+              Color(0xFF8E8E8E),
+              Color(0xFFF2F2F2),
+              Color(0xFF9A9A9A),
+              Color(0xFFDADADA),
+            ],
           ),
-          child: Center(
-            child: FractionallySizedBox(
-              widthFactor: 0.28,
-              heightFactor: 0.28,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                ),
+        ),
+        child: Center(
+          child: FractionallySizedBox(
+            widthFactor: 0.24,
+            heightFactor: 0.24,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Vault.canvas,
               ),
             ),
           ),
@@ -1693,9 +2455,10 @@ class _Disc extends StatelessWidget {
 import 'package:flutter/material.dart';
 
 import '../models/album.dart';
+import '../theme/app_theme.dart';
 import 'generated_cover.dart';
 
-/// Riel vertical con una miniatura por disco.
+/// Riel vertical con una miniatura circular por disco y el rótulo "ARCHIVAL".
 class AlbumRail extends StatelessWidget {
   const AlbumRail({
     super.key,
@@ -1712,36 +2475,60 @@ class AlbumRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      child: SafeArea(
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        color: Vault.surface1,
+        border: Border(right: BorderSide(color: Vault.hairline)),
+      ),
+      child: SizedBox(
+        width: width,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            for (var i = 0; i < albums.length; i++)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: GestureDetector(
-                  key: Key('rail-$i'),
-                  onTap: () => onSelected(i),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    width: i == selectedIndex ? 52 : 40,
-                    height: i == selectedIndex ? 52 : 40,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: i == selectedIndex
-                            ? Colors.white
-                            : Colors.transparent,
-                        width: 2,
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                children: [
+                  for (var i = 0; i < albums.length; i++)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Center(
+                        child: GestureDetector(
+                          key: Key('rail-$i'),
+                          onTap: () => onSelected(i),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            width: 52,
+                            height: 52,
+                            padding: const EdgeInsets.all(3),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: i == selectedIndex
+                                    ? Vault.mint
+                                    : Colors.transparent,
+                                width: 2,
+                              ),
+                            ),
+                            child: ClipOval(
+                              child: GeneratedCover(album: albums[i]),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                    child: GeneratedCover(album: albums[i]),
-                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              child: RotatedBox(
+                quarterTurns: 1,
+                child: Text(
+                  'ARCHIVAL',
+                  style: ledgerLabel(fontSize: 10, color: Vault.granite),
                 ),
               ),
+            ),
           ],
         ),
       ),
@@ -1788,7 +2575,7 @@ amplio muestra, lado a lado, el riel de discos (AlbumRail), el panel del disco
 - `LayoutBuilder` con `constraints.maxWidth`; nada de `MediaQuery.of(context).size` ni de orientación.
 - Un breakpoint con nombre (el valor por defecto del skill es `600.0`). Anotar el valor y el operador de comparación: la Task 11 los reutiliza.
 - Ninguna comprobación de tipo de dispositivo.
-- `AlbumRail` recibe `selectedIndex: selection.index` y `onSelected: selection.select`; los dos paneles reciben `albums[selection.index]`.
+- `AlbumRail` recibe `selectedIndex: selection.index` y `onSelected: selection.select`; los dos paneles reciben `albums[selection.index]`; `AlbumHeroPane` recibe `isFavorite: selection.isFavorite(album.id)` y `onToggleFavorite: () => selection.toggleFavorite(album.id)`.
 
 Si falta algo, se le vuelve a pedir al skill; no se corrige a mano.
 
@@ -2171,7 +2958,13 @@ Rect? _verticalFold(List<ReservedRegion> regions) {
                 selectedIndex: selection.index,
                 onSelected: selection.select,
               ),
-              Expanded(child: AlbumHeroPane(album: album)),
+              Expanded(
+                child: AlbumHeroPane(
+                  album: album,
+                  isFavorite: selection.isFavorite(album.id),
+                  onToggleFavorite: () => selection.toggleFavorite(album.id),
+                ),
+              ),
             ],
           ),
         ),

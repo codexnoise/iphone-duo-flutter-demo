@@ -45,6 +45,32 @@ usa la app (título, artistas, año, país, sellos, formatos, géneros, estilos,
 tracklist, créditos, notas); descarta las URLs de imágenes y los datos de
 comunidad y de marketplace, que no son CC0. La app nunca llama a la red.
 
+## Sistema visual
+
+Referencias generadas con Google Stitch en `docs/design/stitch/` (pantallas por
+pose + `DESIGN.md`, sistema "Archival Modernist"). Se toman como referencia
+visual; el código no se usa.
+
+- **Paleta:** lienzo `#1C1A19`, superficies `#252220` / `#2E2A28`, líneas de 1 px
+  `#3A3533`; acentos menta `#2EC4B6`, ocre `#FFD166`, bermellón `#E76F51`, teal
+  profundo `#0E3B43`, salvia `#8AB17D`; texto `#F4F1EA` / `#A8A29E` / `#6E6763`.
+- **Tipografía:** Bodoni Moda para títulos de disco (la última palabra en
+  cursiva menta) y Plus Jakarta Sans para todo lo demás; las etiquetas van en
+  mayúsculas con tracking amplio. Ambas son OFL y se empaquetan como fuentes
+  variables en `assets/fonts/` (el grosor se fija con `fontVariations`).
+- **Encabezado:** "• ARCHIVE / DISCOTHEQUE" sobre *Curated Vault* en serif
+  cursiva; el contador de favoritos en una pastilla a la derecha.
+- **Componentes:** pastillas con borde fino ("CD · ALBUM", "CAT. …"), pestañas
+  segmentadas con la activa en menta, filas de registro con línea inferior
+  (posición en gris granito, duración en gris piedra), riel con miniaturas
+  circulares y el rótulo vertical "ARCHIVAL".
+- **Portadas:** composición Bauhaus por código (anillos concéntricos, dos barras
+  diagonales, medio círculo, retícula fina) con la paleta de cada disco.
+
+De las referencias de Stitch **no** se toman: los datos que inventó (vinilo,
+RPM, matriz, condición, fidelidad de audio), la reproducción de audio ni la
+barra de navegación inferior.
+
 ## Experiencia por pose
 
 El modo de layout lo decide el **espacio disponible** (`LayoutBuilder` →
@@ -55,24 +81,30 @@ reporta y no se ajusta a mano.
 
 ### Compacto (ancho < breakpoint) — p. ej. cerrado, externa en vertical (~466 pt)
 
-- `PageView` horizontal a pantalla completa, un disco por página.
-- Fondo: portada generada del disco.
-- Encima: título del disco en serif grande, artista y año.
-- Abajo: indicador de páginas (5 puntos) y un chevron que despliega la ficha del
-  disco (mismo contenido que el panel derecho del modo de dos paneles) en una
-  hoja deslizable.
-- AppBar mínima con el contador de favoritos (❤️ N) y un botón para marcar el
-  disco actual como favorito.
+Referencia: `docs/design/stitch/closed-carousel.png` y `closed-details-sheet.png`.
+
+- Encabezado *Curated Vault* con el contador de favoritos.
+- `PageView` horizontal, un disco por página: portada enmarcada (borde fino),
+  artista en ocre, título en serif, "año · país" y las pastillas de formato y
+  catálogo.
+- Debajo del `PageView`, fijos: indicador de páginas (5 puntos, el activo en
+  menta), el botón de favorito del disco actual y el botón "VER FICHA Y TRACKS",
+  que abre la ficha (mismo contenido que el panel derecho del modo de dos
+  paneles) en una hoja deslizable.
 
 ### Dos paneles (ancho ≥ breakpoint) — p. ej. abierto (669 pt vertical, ~890 pt horizontal)
 
-- **Riel izquierdo:** miniaturas de las 5 portadas en vertical; tocar una cambia
-  el disco seleccionado.
-- **Panel izquierdo (héroe):** portada en forma de arco, un CD asomando por
-  detrás, título, artista y una franja con año · país · sello.
-- **Panel derecho (detalle):** pestañas **Tracks · Créditos · Ficha · Notas**.
-  - *Tracks:* tarjetas oscuras con posición y título; la duración se muestra solo
-    si viene en el dato.
+Referencia: `docs/design/stitch/open-portrait.png` y `open-landscape.png`.
+
+- **Riel izquierdo:** miniaturas circulares de las 5 portadas (la seleccionada
+  con anillo menta) y el rótulo vertical "ARCHIVAL"; tocar una cambia el disco.
+- **Panel izquierdo (héroe):** portada en arco con un CD asomando por detrás;
+  debajo, artista en ocre, título en serif, "año · país · sello", las pastillas
+  "CD · ALBUM" y "CAT. …" y el botón de favorito.
+- **Panel derecho (detalle):** pestañas segmentadas **Tracks N · Créditos ·
+  Ficha · Notas** y, al pie, "DATOS DE DISCOGS (CC0)".
+  - *Tracks:* filas de registro con posición y título; la duración se muestra
+    solo si viene en el dato.
   - *Créditos:* nombre y rol (`extraartists`); si no hay, "Sin créditos en
     Discogs".
   - *Ficha:* año, país, sello y número de catálogo, formato, géneros y estilos.
@@ -107,6 +139,7 @@ dispositivo, que es lo que exige el skill.
 ```
 tool/
 └── fetch_discogs.dart          # descarga los 5 releases → assets/discogs/
+assets/fonts/                   # Bodoni Moda y Plus Jakarta Sans (OFL) + licencias
 assets/discogs/
 ├── <release_id>.json           # 5 archivos, solo campos CC0 de Discogs
 └── ATTRIBUTION.md
@@ -117,11 +150,15 @@ lib/
 ├── data/album_palettes.dart    # paleta de portada por release_id
 ├── layout/layout_mode.dart     # función pura: (ancho, postura, pliegue) → modo
 ├── state/selection.dart        # disco seleccionado + favoritos (ChangeNotifier)
-├── theme/app_theme.dart        # tema oscuro y estilo de títulos
+├── theme/app_theme.dart        # tokens "Archival Modernist", tema y estilos de texto
 ├── screens/catalog_loader.dart # carga los discos, pantalla de error, dueño de Selection
 ├── screens/catalog_screen.dart # LayoutBuilder → CoverCarousel | dos paneles
 └── widgets/
-    ├── favorites_badge.dart    # contador ❤️ N
+    ├── favorites_badge.dart    # contador ❤️ N en pastilla
+    ├── favorite_button.dart    # botón de favorito del disco actual
+    ├── vault_title.dart        # encabezado "ARCHIVE / DISCOTHEQUE · Curated Vault"
+    ├── album_title.dart        # título en serif con la última palabra en cursiva menta
+    ├── archive_chip.dart       # pastilla con borde fino
     ├── pose_badge.dart         # texto de diagnóstico (postura · ancho · modo), legible por MCP
     ├── generated_cover.dart    # CustomPaint de la portada
     ├── cover_carousel.dart     # modo compacto
