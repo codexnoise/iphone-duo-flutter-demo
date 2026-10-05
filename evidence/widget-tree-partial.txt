@@ -1,0 +1,37 @@
+# Plegado parcial — separación de paneles en el pliegue
+
+Herramienta: Dart & Flutter MCP server 1.1.2 — `get_runtime_errors` + lectura del PoseBadge
+             (Text[pose-badge] = postura · ancho · modo · pliegue, calculado por layoutFor)
+Postura:     paquete foldable 1.0.5 (DuoMediaQuery.statusOf / regionsOf), bridgeMode none
+Dispositivo: iPhone Duo (simulador, iOS 27.1) — interna en HORIZONTAL, plegada a medias
+Disco:       Gondwana — "Alabanza - Por La Fuerza De La Razón"
+Fecha:       2026-10-04
+
+## Lectura
+
+PoseBadge: "partiallyOpen · 951 pt · dualPane · pliegue 456–496"
+get_runtime_errors: "No runtime errors found."
+
+- foldable reporta HingeStatus.partiallyOpen y una región `division` vertical de x = 456 a x = 496
+  (40 pt, centrada en 951 / 2 = 475.5).
+- layoutFor → CatalogLayout.dualPane(leftPaneWidth: 456, gapWidth: 40): riel + panel del disco ocupan
+  0–456, franja vacía 456–496, AlbumDetailPane desde 496. Ningún contenido cruza el pliegue.
+- Las coordenadas de la región coinciden con las del LayoutBuilder (body en x = 0): no hizo falta convertir.
+
+## Recorrido previo
+
+| Pose                         | PoseBadge                                  | Errores |
+|------------------------------|--------------------------------------------|---------|
+| Cerrado, horizontal (fix)    | (678 × 394) dualPane                       | ninguno tras el fix |
+| Cerrado, vertical            | closed · 466 pt · compact                  | ninguno |
+| Abriendo (transición)        | partiallyOpen · 669 pt · dualPane          | ninguno (sin región: 50 %) |
+| Abierto, vertical            | fullyOpen · 669 pt · dualPane              | ninguno |
+| Plegado parcial, horizontal  | partiallyOpen · 951 pt · dualPane · pliegue 456–496 | ninguno |
+
+## Hallazgos
+
+- Con la interna en VERTICAL (669 × 951) el pliegue es HORIZONTAL (muescas de la bisagra a media altura en
+  los bordes laterales del marco). layoutFor ignora pliegues horizontales, así que plegada a medias en
+  vertical los dos paneles quedan lado a lado y el pliegue los cruza. Pendiente de decisión.
+- En horizontal la barra de estado (hora y wifi, arriba a la derecha) se superpone al extremo derecho de la
+  pestaña "Notas".
