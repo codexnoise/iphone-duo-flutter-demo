@@ -127,12 +127,12 @@ dispositivo, que es lo que exige el skill.
 
 ### Medidas reales confirmadas vía MCP (body del `Scaffold`)
 
-| Pose | maxWidth × maxHeight |
-|---|---|
-| Interna, vertical | 669 × 813 |
-| Externa, horizontal | 678 × 410 |
-| Externa, vertical | pendiente de medir |
-| Interna, horizontal | pendiente de medir |
+| Pose | Ventana | maxWidth × maxHeight |
+|---|---|---|
+| Interna, vertical | 669 × 951 | 669 × 797 |
+| Interna, horizontal | 951 × 669 | 951 × 597 |
+| Externa, vertical | 466 × 678 | 466 × 606 |
+| Externa, horizontal | 678 × 466 | 678 × 394 |
 
 ## Estructura
 

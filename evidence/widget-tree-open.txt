@@ -1,0 +1,42 @@
+# Medidas del LayoutBuilder por pose
+
+Herramienta: Dart & Flutter MCP server 1.1.2 — `vm_service callMethod ext.flutter.inspector.getLayoutExplorerNode`
+             sobre el `LayoutBuilder` de lib/screens/catalog_screen.dart (valueId tomado de `widget_inspector get_widget_tree`)
+Dispositivo: iPhone Duo (simulador, iOS 27.1); poses cambiadas a mano en DeviceHub
+App:         fvm flutter run (Flutter 3.47.4) — rama cd-catalog, breakpoint largeScreenMinWidth = 600 (operador >)
+Fechas:      2026-10-03 (abierto) y 2026-10-04 (cerrado)
+
+| Pose                 | Ventana     | Body (offset y) | LayoutBuilder máx. | Hijo construido | get_runtime_errors |
+|----------------------|-------------|-----------------|--------------------|-----------------|--------------------|
+| Abierto, vertical    | 669 × 951   | y = 154         | 669 × 797          | Row (dos paneles) | sin errores |
+| Abierto, horizontal  | 951 × 669   | y = 72          | 951 × 597          | Row (dos paneles) | sin errores |
+| Cerrado, vertical    | 466 × 678   | y = 72          | 466 × 606          | CoverCarousel     | sin errores |
+| Cerrado, horizontal  | 678 × 466   | y = 72          | 678 × 394          | Row (dos paneles) | sin errores |
+
+## Árbol resumido en dos paneles (abierto, vertical; Disko 0, 2 favoritos)
+
+Scaffold
+├─ AppBar → VaultTitle "Curated Vault" · FavoritesBadge[favorites-count] "2"
+└─ LayoutBuilder (669 × 797)
+   └─ Row
+      ├─ AlbumRail → ListView (rail-0 … rail-4) · "ARCHIVAL"
+      ├─ Expanded → AlbumHeroPane: portada en arco + _Disc · "SAL Y MILETO" · AlbumTitle "Disko 0"
+      │            · "2001 · Ecuador · Not On Label (Sal Y Mileto Self-released)" · ArchiveChip "CD · ALBUM"
+      │            · FavoriteButton[favorite-toggle]
+      ├─ VerticalDivider
+      └─ Expanded → AlbumDetailPane: TabBar (Tracks 10 · Créditos · Ficha · Notas)
+                   → _TracksTab (10 × _LedgerRow, "Avisos Klasificados…" 10:57 … "Kuervo Mio" 2:19)
+                   · "DATOS DE DISCOGS (CC0)"
+
+## Observaciones
+
+- El cambio carrusel → dos paneles entró por `hot_reload` con el Duo abierto, sin reiniciar: el disco
+  (Disko 0) y el contador (2) se conservaron.
+- En horizontal desaparece la barra de estado: el body empieza en y = 72 (solo el AppBar) en vez de y = 154.
+- Las medidas de terceros del SPEC (externa ≈ 466, interna ≈ 626 vertical / 890 horizontal) no coinciden
+  con el simulador para la interna: mide 669 en vertical y 951 en horizontal.
+- La externa en horizontal (678) supera el breakpoint y muestra dos paneles, decisión registrada en el diseño.
+- Cerrado, horizontal (captura del desarrollador, Gondwana — Alabanza): sin errores de runtime, pero con
+  394 pt de alto la portada en arco del AlbumHeroPane se encoge a ~35 pt porque el título de 3 líneas, las
+  pastillas y el botón de favorito ocupan casi todo el alto. La cámara frontal (región de oclusión) cae sobre
+  el pie del panel de detalle, en una zona sin contenido. Pendiente para la Task 12.
