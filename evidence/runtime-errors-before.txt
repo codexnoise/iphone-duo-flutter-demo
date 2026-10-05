@@ -1,0 +1,32 @@
+# Errores de runtime — ANTES del fix
+
+Herramienta: Dart & Flutter MCP server 1.1.2 — `get_runtime_errors` tras `hot_reload` (clearRuntimeErrors: true)
+Dispositivo: iPhone Duo (simulador, iOS 27.1) — CERRADO, HORIZONTAL (pantalla externa girada)
+Disco:       Gondwana — "Alabanza - Por La Fuerza De La Razón"
+App:         rama cd-catalog, tras integrar layoutFor (Task 11): división al 50 % incluyendo el riel
+Fecha:       2026-10-04
+
+## Lectura literal (resumen de los campos relevantes)
+
+Found 1 error:
+  Exception caught by rendering library
+  The following assertion was thrown during layout:
+  A RenderFlex overflowed by 3.0 pixels on the bottom.
+  The relevant error-causing widget was:
+    Column  file:///…/lib/widgets/album_hero_pane.dart:34:16
+  The overflowing RenderFlex has an orientation of Axis.vertical.
+  RenderFlex#7aa48 relayoutBoundary=up5 OVERFLOWING
+    constraints: BoxConstraints(w=219.0, 0.0<=h<=354.0)
+    size:        Size(219.0, 354.0)
+    child 1 (Flexible → Align → AspectRatio con la portada en arco):
+                 constraints BoxConstraints(0.0<=w<=219.0, h=0.0) → Size(219.0, 0.0)
+    child 2 (Spacer): Size(0.0, 0.0)
+
+## Contexto medido
+
+- LayoutBuilder de la pantalla: 678 × 394 → dos paneles (layoutFor, división al 50 %: 339 pt a la izquierda).
+- Panel izquierdo = riel (72) + AlbumHeroPane (267) → columna de 219 pt tras el padding de 24.
+- La portada (Flexible) ya cedió todo su alto (0 pt) y el contenido fijo (artista, título de 3+ líneas,
+  "año · país · sello", pastillas, divisor, botón de favorito) sigue sin caber: 3 px de overflow.
+- Antes de la Task 11 (riel fuera de la mitad izquierda) la columna medía ~254 pt y no había error, pero la
+  portada ya se encogía a ~35 pt (captura del desarrollador).
