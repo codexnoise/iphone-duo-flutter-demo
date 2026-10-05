@@ -34,7 +34,9 @@ class AlbumHeroPane extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Flexible(
+            // La zona de la portada absorbe todo el alto sobrante: en poses bajas
+            // se encoge ella, no el bloque de texto.
+            Expanded(
               child: Align(
                 alignment: Alignment.topLeft,
                 child: AspectRatio(
@@ -65,13 +67,12 @@ class AlbumHeroPane extends StatelessWidget {
                 ),
               ),
             ),
-            const Spacer(),
             Text(
               album.artist.toUpperCase(),
               style: ledgerLabel(color: Vault.ochre),
             ),
             const SizedBox(height: 6),
-            AlbumTitle(title: album.title, fontSize: 36),
+            AlbumTitle(title: album.title, fontSize: 36, maxLines: 3),
             if (details.isNotEmpty) ...[
               const SizedBox(height: 8),
               Text(

@@ -9,11 +9,15 @@ class AlbumTitle extends StatelessWidget {
     required this.title,
     required this.fontSize,
     this.textAlign = TextAlign.start,
+    this.maxLines,
   });
 
   final String title;
   final double fontSize;
   final TextAlign textAlign;
+
+  /// Si se fija, el título se recorta con "…" al llegar a ese número de líneas.
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +38,8 @@ class AlbumTitle extends StatelessWidget {
         ],
       ),
       textAlign: textAlign,
+      maxLines: maxLines,
+      overflow: maxLines == null ? null : TextOverflow.ellipsis,
     );
   }
 }
