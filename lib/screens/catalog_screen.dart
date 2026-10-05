@@ -27,6 +27,9 @@ class CatalogScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Se lee aquí, fuera del Scaffold: dentro del body el Scaffold ya quitó el
+    // padding superior porque lo consume el AppBar.
+    final topInset = MediaQuery.paddingOf(context).top;
     return ListenableBuilder(
       listenable: selection,
       builder: (context, _) {
@@ -42,7 +45,7 @@ class CatalogScreen extends StatelessWidget {
               final posture = _postureOf(DuoMediaQuery.statusOf(context));
               // La región llega en coordenadas de la ventana; se pasa a las del
               // body, que empieza bajo la barra de estado y el AppBar.
-              final bodyTop = MediaQuery.paddingOf(context).top + _toolbarHeight;
+              final bodyTop = topInset + _toolbarHeight;
               final fold = _division(
                 DuoMediaQuery.regionsOf(context),
               )?.shift(Offset(0, -bodyTop));
