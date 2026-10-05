@@ -12,6 +12,9 @@ import '../widgets/favorites_badge.dart';
 import '../widgets/pose_badge.dart';
 import '../widgets/vault_title.dart';
 
+/// Alto del AppBar; el body empieza debajo de él y de la barra de estado.
+const double _toolbarHeight = 72;
+
 class CatalogScreen extends StatelessWidget {
   const CatalogScreen({
     super.key,
@@ -29,7 +32,7 @@ class CatalogScreen extends StatelessWidget {
       builder: (context, _) {
         return Scaffold(
           appBar: AppBar(
-            toolbarHeight: 72,
+            toolbarHeight: _toolbarHeight,
             titleSpacing: 20,
             title: const VaultTitle(),
             actions: [FavoritesBadge(count: selection.favoritesCount)],
@@ -37,12 +40,21 @@ class CatalogScreen extends StatelessWidget {
           body: LayoutBuilder(
             builder: (context, constraints) {
               final posture = _postureOf(DuoMediaQuery.statusOf(context));
-              final fold = _verticalFold(DuoMediaQuery.regionsOf(context));
+              // La región llega en coordenadas de la ventana; se pasa a las del
+              // body, que empieza bajo la barra de estado y el AppBar.
+              final bodyTop = MediaQuery.paddingOf(context).top + _toolbarHeight;
+              final fold = _division(
+                DuoMediaQuery.regionsOf(context),
+              )?.shift(Offset(0, -bodyTop));
+              final isVertical = fold != null && fold.height > fold.width;
               final layout = layoutFor(
                 width: constraints.maxWidth,
+                height: constraints.maxHeight,
                 posture: posture,
-                foldLeft: fold?.left,
-                foldRight: fold?.right,
+                foldLeft: isVertical ? fold.left : null,
+                foldRight: isVertical ? fold.right : null,
+                foldTop: fold != null && !isVertical ? fold.top : null,
+                foldBottom: fold != null && !isVertical ? fold.bottom : null,
               );
               return Stack(
                 fit: StackFit.expand,
@@ -70,37 +82,45 @@ class CatalogScreen extends StatelessWidget {
   }
 
   /// Dos paneles separados donde indique [layout]: por la mitad o, con el Duo
-  /// plegado a medias, exactamente en el pliegue.
+  /// plegado a medias, exactamente en el pliegue (lado a lado o apilados).
   Widget _buildLargeScreenLayout(CatalogLayout layout) {
     final album = albums[selection.index];
-    return Row(
+    final firstPane = Row(
       children: [
-        SizedBox(
-          width: layout.leftPaneWidth,
-          child: Row(
-            children: [
-              AlbumRail(
-                albums: albums,
-                selectedIndex: selection.index,
-                onSelected: selection.select,
-              ),
-              Expanded(
-                child: AlbumHeroPane(
-                  album: album,
-                  isFavorite: selection.isFavorite(album.id),
-                  onToggleFavorite: () => selection.toggleFavorite(album.id),
-                ),
-              ),
-            ],
+        AlbumRail(
+          albums: albums,
+          selectedIndex: selection.index,
+          onSelected: selection.select,
+        ),
+        Expanded(
+          child: AlbumHeroPane(
+            album: album,
+            isFavorite: selection.isFavorite(album.id),
+            onToggleFavorite: () => selection.toggleFavorite(album.id),
           ),
         ),
-        if (layout.gapWidth > 0)
-          SizedBox(width: layout.gapWidth)
-        else
-          const VerticalDivider(width: 1),
-        Expanded(child: AlbumDetailPane(album: album)),
       ],
     );
+    final detail = Expanded(child: AlbumDetailPane(album: album));
+    return switch (layout.axis) {
+      PaneAxis.sideBySide => Row(
+          children: [
+            SizedBox(width: layout.firstPaneExtent, child: firstPane),
+            if (layout.gapExtent > 0)
+              SizedBox(width: layout.gapExtent)
+            else
+              const VerticalDivider(width: 1),
+            detail,
+          ],
+        ),
+      PaneAxis.stacked => Column(
+          children: [
+            SizedBox(height: layout.firstPaneExtent, child: firstPane),
+            SizedBox(height: layout.gapExtent),
+            detail,
+          ],
+        ),
+    };
   }
 
   Widget _buildSmallScreenLayout() {
@@ -115,14 +135,10 @@ FoldPosture _postureOf(HingeStatus status) => switch (status) {
       HingeStatus.unknown => FoldPosture.unknown,
     };
 
-/// El pliegue como franja vertical, o null si no hay región de división o
-/// viene en horizontal.
-Rect? _verticalFold(List<ReservedRegion> regions) {
+/// La región de división (el pliegue), o null si todavía no llegó.
+Rect? _division(List<ReservedRegion> regions) {
   for (final region in regions) {
-    if (region.kind == ReservedRegionKind.division &&
-        region.bounds.height > region.bounds.width) {
-      return region.bounds;
-    }
+    if (region.kind == ReservedRegionKind.division) return region.bounds;
   }
   return null;
 }

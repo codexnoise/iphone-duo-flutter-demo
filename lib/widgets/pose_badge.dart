@@ -18,14 +18,15 @@ class PoseBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final left = layout.leftPaneWidth;
+    final first = layout.firstPaneExtent;
     final label = [
       posture.name,
       '${width.toStringAsFixed(0)} pt',
       layout.mode.name,
-      if (left != null && layout.gapWidth > 0)
-        'pliegue ${left.toStringAsFixed(0)}–'
-            '${(left + layout.gapWidth).toStringAsFixed(0)}',
+      if (first != null && layout.gapExtent > 0)
+        'pliegue ${layout.axis == PaneAxis.sideBySide ? 'x' : 'y'} '
+            '${first.toStringAsFixed(0)}–'
+            '${(first + layout.gapExtent).toStringAsFixed(0)}',
     ].join(' · ');
     return IgnorePointer(
       child: DecoratedBox(
