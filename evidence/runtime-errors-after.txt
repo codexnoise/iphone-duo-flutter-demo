@@ -1,0 +1,39 @@
+# Errores de runtime — DESPUÉS del fix y recorrido completo de poses
+
+Herramienta: Dart & Flutter MCP server 1.1.2 — `get_runtime_errors` en cada pose; `hot_reload` por DTD
+Dispositivo: iPhone Duo (simulador, iOS 27.1); poses cambiadas a mano en DeviceHub
+Fecha:       2026-10-04
+
+## Fix aplicado con el skill flutter-fix-layout-issues (commit bfe6db3)
+
+Error (ver runtime-errors-before.txt): "A RenderFlex overflowed by 3.0 pixels on the bottom." en el Column de
+AlbumHeroPane, Duo cerrado en horizontal (columna de 219 × ≤354).
+Diagnóstico: la portada (Flexible) y el Spacer ya estaban en 0 pt; el contenido inflexible (título de 3+ líneas
+y el resto del bloque de datos) no cabía.
+Fix: la zona de la portada pasa a Expanded (absorbe el alto sobrante y es lo que se encoge en poses bajas) y el
+título se limita a 3 líneas con elipsis. Misma pose tras hot_reload: "No runtime errors found."
+
+## Recorrido (PoseBadge + get_runtime_errors)
+
+| Pose                              | PoseBadge                                             | get_runtime_errors |
+|-----------------------------------|-------------------------------------------------------|--------------------|
+| Cerrado, horizontal               | (678 × 394) dualPane, lado a lado                     | sin errores (tras el fix) |
+| Cerrado, vertical                 | closed · 466 pt · compact                             | sin errores |
+| Abierto, vertical                 | fullyOpen · 669 pt · dualPane                         | sin errores |
+| Plegado parcial, horizontal       | partiallyOpen · 951 pt · dualPane · pliegue x 456–496 | sin errores |
+| Plegado parcial, vertical (mesa)  | partiallyOpen · 669 pt · dualPane · pliegue y 302–342 | sin errores |
+| Cerrado, vertical (vuelta)        | closed · 466 pt · compact                             | sin errores |
+
+## Otros cambios durante el recorrido (no los detectó get_runtime_errors)
+
+- Pliegue horizontal (interna en vertical): layoutFor apila los paneles separados en el pliegue (c826f07).
+  Requirió hot_restart: el cambio de forma de CatalogLayout no entra con hot reload (reloadSources -32603).
+- El pliegue horizontal quedaba 82 pt más abajo que la bisagra: MediaQuery.paddingOf(context).top dentro del
+  body del Scaffold vale 0 porque lo consume el AppBar. Se lee fuera del Scaffold (1def4b7). Lo detectó la
+  captura del desarrollador, no el MCP: el layout era válido, solo estaba en el lugar equivocado.
+
+## Pendiente (visual, sin errores)
+
+- Modo mesa: la mitad de arriba (≈302 pt de alto) es ancha y baja; la portada del AlbumHeroPane queda en ≈50 pt.
+- PoseBadge visible en pantalla: ocultarlo antes del video final.
+- En horizontal la barra de estado se superpone al extremo derecho de la pestaña "Notas".
