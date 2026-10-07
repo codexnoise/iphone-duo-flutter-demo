@@ -1,0 +1,32 @@
+# Ejecución de tests
+
+Fecha:       2026-10-06
+Rama:        cd-catalog — Flutter 3.47.4 / Dart 3.13.3 (FVM)
+
+## Unit + widget tests — vía MCP `run_tests` (dart_mcp_server 1.1.2, habilitado con --enable run_tests)
+
+roots: [{root: <proyecto>, paths: ["test"]}]  → "+39: All tests passed!"
+
+| Archivo | Tests | Skill que lo escribió |
+|---|---|---|
+| test/models/album_test.dart       | 14 (9 de parseo + 5 assets reales de Discogs) | dart-add-unit-test |
+| test/state/selection_test.dart    |  4 | dart-add-unit-test |
+| test/layout/layout_mode_test.dart | 14 (ancho, pliegue vertical, pliegue horizontal) | dart-add-unit-test |
+| test/screens/catalog_screen_test.dart | 7 (carrusel / dos paneles / favorito / estado / panel del disco) | flutter-add-widget-test |
+
+Comprobación de que el widget test detecta fallos: con `wideHeroMinAspectRatio = 10` el test
+"en un espacio ancho y bajo pone la portada a la izquierda" falla (Expected < 125.5, Actual 186.7).
+
+## Integration test — iPhone Duo (simulador, iOS 27.1), Duo cerrado en vertical
+
+1. MCP `run_tests` con paths ["integration_test/app_test.dart"]: NO pudo elegir dispositivo
+   ("More than one device connected; please specify a device with the '-d <deviceId>' flag").
+   El esquema de run_tests no expone `-d`.
+2. FALLBACK: `fvm flutter test integration_test/app_test.dart -d 8A082039-2934-44E1-B92C-CDCE41CBC5C1`
+   → Xcode build 19.0 s → "Catálogo de CDs marcar el disco actual como favorito sube el contador"
+   → "+1: All tests passed!"
+
+Flujo del test, explorado antes por MCP `flutter_driver_command` sobre lib/main_test.dart:
+get_health → ok · get_text favorites-count → "0" · tap favorite-toggle · get_text favorites-count → "1".
+
+Limitación: el test corre en la pose en que esté el simulador; no hay API para cambiar la postura.
