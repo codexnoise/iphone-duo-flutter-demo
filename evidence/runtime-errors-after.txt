@@ -37,3 +37,12 @@ título se limita a 3 líneas con elipsis. Misma pose tras hot_reload: "No runti
 - Modo mesa: la mitad de arriba (≈302 pt de alto) es ancha y baja; la portada del AlbumHeroPane queda en ≈50 pt.
 - PoseBadge visible en pantalla: ocultarlo antes del video final.
 - En horizontal la barra de estado se superpone al extremo derecho de la pestaña "Notas".
+
+## Pulido (2026-10-06)
+
+| Cambio | Lectura MCP | get_runtime_errors |
+|---|---|---|
+| PoseBadge en Offstage (no se ve; el MCP lo lee con `vm_service evaluate`) | "closed · 466 pt · compact" | sin errores |
+| Modo mesa: portada a la izquierda, datos a la derecha (skill flutter-build-responsive-layout, `wideHeroMinAspectRatio = 1.3`) | "partiallyOpen · 669 pt · dualPane · pliegue y 302–342" — Gorillaz y Alabanza (título más largo, 2 líneas sin elipsis) | sin errores |
+| Body con SafeArea lateral: iOS reporta `padding R84 B34` en el Duo abierto en horizontal (`displayFeatures []`) | "fullyOpen · 867 pt · dualPane" (antes 951) | sin errores |
+| Pliegue tras el SafeArea, plegado parcial en horizontal | "partiallyOpen · 867 pt · dualPane · pliegue x 456–496" (sin cambios: inset izquierdo 0) | sin errores |
