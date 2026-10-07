@@ -34,7 +34,7 @@ class CatalogScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Se lee aquí, fuera del Scaffold: dentro del body el Scaffold ya quitó el
     // padding superior porque lo consume el AppBar.
-    final topInset = MediaQuery.paddingOf(context).top;
+    final insets = MediaQuery.paddingOf(context);
     return ListenableBuilder(
       listenable: selection,
       builder: (context, _) {
@@ -45,47 +45,56 @@ class CatalogScreen extends StatelessWidget {
             title: const VaultTitle(),
             actions: [FavoritesBadge(count: selection.favoritesCount)],
           ),
-          body: LayoutBuilder(
-            builder: (context, constraints) {
-              final posture = _postureOf(DuoMediaQuery.statusOf(context));
-              // La región llega en coordenadas de la ventana; se pasa a las del
-              // body, que empieza bajo la barra de estado y el AppBar.
-              final bodyTop = topInset + _toolbarHeight;
-              final fold = _division(
-                DuoMediaQuery.regionsOf(context),
-              )?.shift(Offset(0, -bodyTop));
-              final isVertical = fold != null && fold.height > fold.width;
-              final layout = layoutFor(
-                width: constraints.maxWidth,
-                height: constraints.maxHeight,
-                posture: posture,
-                foldLeft: isVertical ? fold.left : null,
-                foldRight: isVertical ? fold.right : null,
-                foldTop: fold != null && !isVertical ? fold.top : null,
-                foldBottom: fold != null && !isVertical ? fold.bottom : null,
-              );
-              return Stack(
-                fit: StackFit.expand,
-                children: [
-                  switch (layout.mode) {
-                    LayoutMode.compact => _buildSmallScreenLayout(),
-                    LayoutMode.dualPane => _buildLargeScreenLayout(layout),
-                  },
-                  Positioned(
-                    left: 8,
-                    bottom: 8,
-                    child: Offstage(
-                      offstage: !_showPoseBadge,
-                      child: PoseBadge(
-                        posture: posture,
-                        width: constraints.maxWidth,
-                        layout: layout,
+          // En horizontal iOS reserva un lateral (cámara y barra de estado:
+          // 84 pt en el Duo abierto) que el body debe respetar.
+          body: SafeArea(
+            top: false,
+            bottom: false,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final posture = _postureOf(DuoMediaQuery.statusOf(context));
+                // La región llega en coordenadas de la ventana; se pasa a las del
+                // body, que empieza bajo la barra de estado y el AppBar y después
+                // del inset lateral izquierdo.
+                final bodyOrigin = Offset(
+                  insets.left,
+                  insets.top + _toolbarHeight,
+                );
+                final fold = _division(DuoMediaQuery.regionsOf(context))
+                    ?.shift(-bodyOrigin);
+                final isVertical = fold != null && fold.height > fold.width;
+                final layout = layoutFor(
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                  posture: posture,
+                  foldLeft: isVertical ? fold.left : null,
+                  foldRight: isVertical ? fold.right : null,
+                  foldTop: fold != null && !isVertical ? fold.top : null,
+                  foldBottom: fold != null && !isVertical ? fold.bottom : null,
+                );
+                return Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    switch (layout.mode) {
+                      LayoutMode.compact => _buildSmallScreenLayout(),
+                      LayoutMode.dualPane => _buildLargeScreenLayout(layout),
+                    },
+                    Positioned(
+                      left: 8,
+                      bottom: 8,
+                      child: Offstage(
+                        offstage: !_showPoseBadge,
+                        child: PoseBadge(
+                          posture: posture,
+                          width: constraints.maxWidth,
+                          layout: layout,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              );
-            },
+                  ],
+                );
+              },
+            ),
           ),
         );
       },
@@ -115,22 +124,22 @@ class CatalogScreen extends StatelessWidget {
     final detail = Expanded(child: AlbumDetailPane(album: album));
     return switch (layout.axis) {
       PaneAxis.sideBySide => Row(
-          children: [
-            SizedBox(width: layout.firstPaneExtent, child: firstPane),
-            if (layout.gapExtent > 0)
-              SizedBox(width: layout.gapExtent)
-            else
-              const VerticalDivider(width: 1),
-            detail,
-          ],
-        ),
+        children: [
+          SizedBox(width: layout.firstPaneExtent, child: firstPane),
+          if (layout.gapExtent > 0)
+            SizedBox(width: layout.gapExtent)
+          else
+            const VerticalDivider(width: 1),
+          detail,
+        ],
+      ),
       PaneAxis.stacked => Column(
-          children: [
-            SizedBox(height: layout.firstPaneExtent, child: firstPane),
-            SizedBox(height: layout.gapExtent),
-            detail,
-          ],
-        ),
+        children: [
+          SizedBox(height: layout.firstPaneExtent, child: firstPane),
+          SizedBox(height: layout.gapExtent),
+          detail,
+        ],
+      ),
     };
   }
 
@@ -140,11 +149,11 @@ class CatalogScreen extends StatelessWidget {
 }
 
 FoldPosture _postureOf(HingeStatus status) => switch (status) {
-      HingeStatus.closed => FoldPosture.closed,
-      HingeStatus.partiallyOpen => FoldPosture.partiallyOpen,
-      HingeStatus.fullyOpen => FoldPosture.fullyOpen,
-      HingeStatus.unknown => FoldPosture.unknown,
-    };
+  HingeStatus.closed => FoldPosture.closed,
+  HingeStatus.partiallyOpen => FoldPosture.partiallyOpen,
+  HingeStatus.fullyOpen => FoldPosture.fullyOpen,
+  HingeStatus.unknown => FoldPosture.unknown,
+};
 
 /// La región de división (el pliegue), o null si todavía no llegó.
 Rect? _division(List<ReservedRegion> regions) {
