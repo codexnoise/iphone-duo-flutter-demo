@@ -12,6 +12,11 @@ import '../widgets/favorites_badge.dart';
 import '../widgets/pose_badge.dart';
 import '../widgets/vault_title.dart';
 
+/// Si se muestra la insignia de pose. Por defecto queda fuera de la vista (pero
+/// en el árbol, legible por el MCP); se activa con
+/// `--dart-define=SHOW_POSE_BADGE=true`.
+const bool _showPoseBadge = bool.fromEnvironment('SHOW_POSE_BADGE');
+
 /// Alto del AppBar; el body empieza debajo de él y de la barra de estado.
 const double _toolbarHeight = 72;
 
@@ -69,10 +74,13 @@ class CatalogScreen extends StatelessWidget {
                   Positioned(
                     left: 8,
                     bottom: 8,
-                    child: PoseBadge(
-                      posture: posture,
-                      width: constraints.maxWidth,
-                      layout: layout,
+                    child: Offstage(
+                      offstage: !_showPoseBadge,
+                      child: PoseBadge(
+                        posture: posture,
+                        width: constraints.maxWidth,
+                        layout: layout,
+                      ),
                     ),
                   ),
                 ],
