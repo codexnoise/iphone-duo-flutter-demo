@@ -34,8 +34,9 @@ class Album {
       year: year is int && year > 0 ? year : null,
       country: _text(json['country']),
       label: labels.isEmpty ? null : _name(labels.first['name']),
-      catalogNumber:
-          catalogNumber?.toLowerCase() == 'none' ? null : catalogNumber,
+      catalogNumber: catalogNumber?.toLowerCase() == 'none'
+          ? null
+          : catalogNumber,
       formats: [
         for (final format in _maps(json['formats']))
           if (_text(format['name']) case final name?)
@@ -76,6 +77,23 @@ class Album {
   final List<Track> tracks;
   final List<Credit> credits;
   final String? notes;
+
+  /// El mismo disco con otro título para mostrar.
+  Album withTitle(String title) => Album(
+    id: id,
+    title: title,
+    artist: artist,
+    year: year,
+    country: country,
+    label: label,
+    catalogNumber: catalogNumber,
+    formats: formats,
+    genres: genres,
+    styles: styles,
+    tracks: tracks,
+    credits: credits,
+    notes: notes,
+  );
 }
 
 class Track {

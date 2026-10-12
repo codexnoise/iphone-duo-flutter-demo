@@ -5,7 +5,7 @@ import 'package:duo_adaptive_demo/widgets/album_detail_pane.dart';
 import 'package:duo_adaptive_demo/widgets/album_hero_pane.dart';
 import 'package:duo_adaptive_demo/widgets/album_rail.dart';
 import 'package:duo_adaptive_demo/widgets/cover_carousel.dart';
-import 'package:duo_adaptive_demo/widgets/generated_cover.dart';
+import 'package:duo_adaptive_demo/widgets/album_cover.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -128,7 +128,7 @@ void main() {
       // La mitad de arriba del Duo en modo mesa, sin el riel.
       await pumpHero(tester, const Size(597, 302));
 
-      final cover = tester.getRect(find.byType(GeneratedCover));
+      final cover = tester.getRect(find.byType(AlbumCover));
       final title = tester.getRect(find.text('Gorillaz').last);
       expect(cover.right, lessThan(title.left));
       expect(tester.takeException(), isNull);
@@ -137,7 +137,7 @@ void main() {
     testWidgets('en un espacio alto pone la portada arriba', (tester) async {
       await pumpHero(tester, const Size(262, 797));
 
-      final cover = tester.getRect(find.byType(GeneratedCover));
+      final cover = tester.getRect(find.byType(AlbumCover));
       final title = tester.getRect(find.text('Gorillaz').last);
       expect(cover.bottom, lessThanOrEqualTo(title.top));
       expect(tester.takeException(), isNull);

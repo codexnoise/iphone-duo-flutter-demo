@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/album.dart';
 import '../theme/app_theme.dart';
-import 'generated_cover.dart';
+import 'album_cover.dart';
 
 /// Riel vertical con una miniatura circular por disco y el rótulo "ARCHIVAL".
 class AlbumRail extends StatelessWidget {
@@ -56,7 +56,7 @@ class AlbumRail extends StatelessWidget {
                               ),
                             ),
                             child: ClipOval(
-                              child: GeneratedCover(album: albums[i]),
+                              child: AlbumCover(album: albums[i]),
                             ),
                           ),
                         ),

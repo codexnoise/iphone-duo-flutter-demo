@@ -7,7 +7,7 @@ import 'album_detail_pane.dart';
 import 'album_title.dart';
 import 'archive_chip.dart';
 import 'favorite_button.dart';
-import 'generated_cover.dart';
+import 'album_cover.dart';
 
 /// Modo compacto: una portada enmarcada por disco, con los controles fijos
 /// debajo del carrusel.
@@ -151,7 +151,7 @@ class _CoverPage extends StatelessWidget {
                     padding: const EdgeInsets.all(1),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(3),
-                      child: GeneratedCover(album: album),
+                      child: AlbumCover(album: album),
                     ),
                   ),
                 ),
@@ -205,7 +205,7 @@ class _SheetHeader extends StatelessWidget {
             dimension: 48,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(4),
-              child: GeneratedCover(album: album),
+              child: AlbumCover(album: album),
             ),
           ),
           const SizedBox(width: 12),

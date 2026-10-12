@@ -21,22 +21,22 @@ enum FoldPosture { closed, partiallyOpen, fullyOpen, unknown }
 
 class CatalogLayout {
   const CatalogLayout.compact()
-      : mode = LayoutMode.compact,
-        axis = PaneAxis.sideBySide,
-        firstPaneExtent = null,
-        gapExtent = 0;
+    : mode = LayoutMode.compact,
+      axis = PaneAxis.sideBySide,
+      firstPaneExtent = null,
+      gapExtent = 0;
 
   const CatalogLayout.sideBySide({
     required double this.firstPaneExtent,
     this.gapExtent = 0,
-  })  : mode = LayoutMode.dualPane,
-        axis = PaneAxis.sideBySide;
+  }) : mode = LayoutMode.dualPane,
+       axis = PaneAxis.sideBySide;
 
   const CatalogLayout.stacked({
     required double this.firstPaneExtent,
     this.gapExtent = 0,
-  })  : mode = LayoutMode.dualPane,
-        axis = PaneAxis.stacked;
+  }) : mode = LayoutMode.dualPane,
+       axis = PaneAxis.stacked;
 
   final LayoutMode mode;
   final PaneAxis axis;
@@ -60,7 +60,8 @@ class CatalogLayout {
   int get hashCode => Object.hash(mode, axis, firstPaneExtent, gapExtent);
 
   @override
-  String toString() => 'CatalogLayout(${mode.name}, ${axis.name}, '
+  String toString() =>
+      'CatalogLayout(${mode.name}, ${axis.name}, '
       'first: $firstPaneExtent, gap: $gapExtent)';
 }
 

@@ -7,6 +7,12 @@ import '../models/album.dart';
 /// Releases de Discogs del catálogo, en el orden en que se muestran.
 const List<int> kReleaseIds = [4214311, 13115020, 9100081, 11066248, 8172924];
 
+/// Títulos que la app muestra en lugar del de Discogs.
+const Map<int, String> kDisplayTitles = {
+  // En Discogs: "Alabanza - Por La Fuerza De La Razón".
+  11066248: 'Alabanza',
+};
+
 class AlbumLoadException implements Exception {
   const AlbumLoadException(this.releaseId, this.cause);
 
@@ -29,7 +35,11 @@ class AlbumRepository {
     for (final id in kReleaseIds) {
       try {
         final raw = await source.loadString('assets/discogs/$id.json');
-        albums.add(Album.fromJson(jsonDecode(raw) as Map<String, dynamic>));
+        final album = Album.fromJson(jsonDecode(raw) as Map<String, dynamic>);
+        final displayTitle = kDisplayTitles[id];
+        albums.add(
+          displayTitle == null ? album : album.withTitle(displayTitle),
+        );
       } catch (error) {
         throw AlbumLoadException(id, error);
       }

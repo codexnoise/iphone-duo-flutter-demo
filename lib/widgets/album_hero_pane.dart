@@ -5,7 +5,7 @@ import '../theme/app_theme.dart';
 import 'album_title.dart';
 import 'archive_chip.dart';
 import 'favorite_button.dart';
-import 'generated_cover.dart';
+import 'album_cover.dart';
 
 /// Proporción ancho / alto a partir de la cual el panel es "ancho y bajo"
 /// (p. ej. la mitad de arriba del Duo plegado en modo mesa) y la portada pasa
@@ -113,7 +113,7 @@ class _Artwork extends StatelessWidget {
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(999),
                 ),
-                child: GeneratedCover(album: album),
+                child: AlbumCover(album: album),
               ),
             ),
           ),
@@ -150,7 +150,10 @@ class _Details extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(album.artist.toUpperCase(), style: ledgerLabel(color: Vault.ochre)),
+        Text(
+          album.artist.toUpperCase(),
+          style: ledgerLabel(color: Vault.ochre),
+        ),
         const SizedBox(height: 6),
         AlbumTitle(
           title: album.title,

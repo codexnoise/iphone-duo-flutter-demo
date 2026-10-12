@@ -50,3 +50,7 @@ app.*.map.json
 
 # Export completo de Google Stitch (las referencias versionadas están en docs/design/stitch/)
 stitch_editorial_music_collector_app/
+
+# Portadas reales de Discogs: con copyright, solo para builds locales (tool/fetch_covers.dart)
+assets/covers/*
+!assets/covers/.gitkeep

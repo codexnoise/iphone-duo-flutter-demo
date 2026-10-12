@@ -59,6 +59,7 @@ flutter:
 
   assets:
     - assets/discogs/
+    - assets/covers/
 
   fonts:
     - family: Bodoni Moda

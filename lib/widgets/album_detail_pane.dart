@@ -237,7 +237,10 @@ class _LedgerRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (overline case final overline?)
-                    Text(overline.toUpperCase(), style: ledgerLabel(fontSize: 10)),
+                    Text(
+                      overline.toUpperCase(),
+                      style: ledgerLabel(fontSize: 10),
+                    ),
                   Text(title, style: const TextStyle(fontSize: 15)),
                   if (underline case final underline?)
                     Text(
